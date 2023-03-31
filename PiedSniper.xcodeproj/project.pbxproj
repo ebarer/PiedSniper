@@ -1,0 +1,423 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 56;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		CE27A40D29D6929500B3A74E /* testSchedule.txt in Resources */ = {isa = PBXBuildFile; fileRef = CE27A40C29D6929500B3A74E /* testSchedule.txt */; };
+		CE27A41029D69BEA00B3A74E /* testLockerRooms.txt in Resources */ = {isa = PBXBuildFile; fileRef = CE27A40F29D69BC800B3A74E /* testLockerRooms.txt */; };
+		CE27A41229D6B2C000B3A74E /* TodayGameCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE27A41129D6B2C000B3A74E /* TodayGameCell.swift */; };
+		CE3C270B29D6BC53003C70CB /* Date+StringHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE3C270A29D6BC53003C70CB /* Date+StringHelpers.swift */; };
+		CE3C270F29D6BC58003C70CB /* Game.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE3C270C29D6BC58003C70CB /* Game.swift */; };
+		CE3C271029D6BC58003C70CB /* Status.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE3C270D29D6BC58003C70CB /* Status.swift */; };
+		CE3C271129D6BC58003C70CB /* Team.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE3C270E29D6BC58003C70CB /* Team.swift */; };
+		CE898DA629D59C1100DE8A76 /* CompletedGameCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE898DA529D59C1100DE8A76 /* CompletedGameCell.swift */; };
+		CE898DA829D59C3C00DE8A76 /* UpcomingGameCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE898DA729D59C3C00DE8A76 /* UpcomingGameCell.swift */; };
+		CEE755E529D106CB0043D782 /* PiedSniperApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEE755E429D106CB0043D782 /* PiedSniperApp.swift */; };
+		CEE755E929D106CC0043D782 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CEE755E829D106CC0043D782 /* Assets.xcassets */; };
+		CEE755ED29D106CC0043D782 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CEE755EC29D106CC0043D782 /* Preview Assets.xcassets */; };
+		CEE755F429D117CD0043D782 /* SharksIceParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEE755F329D117CD0043D782 /* SharksIceParser.swift */; };
+		CEE755F729D4334F0043D782 /* GameCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEE755F629D4334F0043D782 /* GameCell.swift */; };
+		CEE7560029D449F00043D782 /* Schedule.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEE755FF29D449F00043D782 /* Schedule.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		CE27A40C29D6929500B3A74E /* testSchedule.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = testSchedule.txt; sourceTree = "<group>"; };
+		CE27A40F29D69BC800B3A74E /* testLockerRooms.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = testLockerRooms.txt; sourceTree = "<group>"; };
+		CE27A41129D6B2C000B3A74E /* TodayGameCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodayGameCell.swift; sourceTree = "<group>"; };
+		CE3C270A29D6BC53003C70CB /* Date+StringHelpers.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "Date+StringHelpers.swift"; path = "Extensions/Date+StringHelpers.swift"; sourceTree = "<group>"; };
+		CE3C270C29D6BC58003C70CB /* Game.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Game.swift; path = Model/Game.swift; sourceTree = "<group>"; };
+		CE3C270D29D6BC58003C70CB /* Status.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Status.swift; path = Model/Status.swift; sourceTree = "<group>"; };
+		CE3C270E29D6BC58003C70CB /* Team.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Team.swift; path = Model/Team.swift; sourceTree = "<group>"; };
+		CE898DA529D59C1100DE8A76 /* CompletedGameCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompletedGameCell.swift; sourceTree = "<group>"; };
+		CE898DA729D59C3C00DE8A76 /* UpcomingGameCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpcomingGameCell.swift; sourceTree = "<group>"; };
+		CEE755E129D106CB0043D782 /* PiedSniper.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PiedSniper.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		CEE755E429D106CB0043D782 /* PiedSniperApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PiedSniperApp.swift; sourceTree = "<group>"; };
+		CEE755E829D106CC0043D782 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		CEE755EA29D106CC0043D782 /* PiedSniper.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = PiedSniper.entitlements; sourceTree = "<group>"; };
+		CEE755EC29D106CC0043D782 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		CEE755F329D117CD0043D782 /* SharksIceParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SharksIceParser.swift; sourceTree = "<group>"; };
+		CEE755F529D429A70043D782 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
+		CEE755F629D4334F0043D782 /* GameCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameCell.swift; sourceTree = "<group>"; };
+		CEE755FF29D449F00043D782 /* Schedule.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Schedule.swift; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		CEE755DE29D106CB0043D782 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		CE27A40B29D5A32B00B3A74E /* GameCells */ = {
+			isa = PBXGroup;
+			children = (
+				CEE755F629D4334F0043D782 /* GameCell.swift */,
+				CE898DA729D59C3C00DE8A76 /* UpcomingGameCell.swift */,
+				CE898DA529D59C1100DE8A76 /* CompletedGameCell.swift */,
+				CE27A41129D6B2C000B3A74E /* TodayGameCell.swift */,
+			);
+			path = GameCells;
+			sourceTree = "<group>";
+		};
+		CEE755D829D106CB0043D782 = {
+			isa = PBXGroup;
+			children = (
+				CEE755E329D106CB0043D782 /* PiedSniper */,
+				CEE755E229D106CB0043D782 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		CEE755E229D106CB0043D782 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				CEE755E129D106CB0043D782 /* PiedSniper.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		CEE755E329D106CB0043D782 /* PiedSniper */ = {
+			isa = PBXGroup;
+			children = (
+				CEE755F529D429A70043D782 /* Info.plist */,
+				CEE755EA29D106CC0043D782 /* PiedSniper.entitlements */,
+				CEE755E829D106CC0043D782 /* Assets.xcassets */,
+				CEE755E429D106CB0043D782 /* PiedSniperApp.swift */,
+				CEE755FF29D449F00043D782 /* Schedule.swift */,
+				CE27A40B29D5A32B00B3A74E /* GameCells */,
+				CEE755FC29D4491C0043D782 /* Helpers */,
+				CEE755EB29D106CC0043D782 /* Preview Content */,
+			);
+			path = PiedSniper;
+			sourceTree = "<group>";
+		};
+		CEE755EB29D106CC0043D782 /* Preview Content */ = {
+			isa = PBXGroup;
+			children = (
+				CE27A40C29D6929500B3A74E /* testSchedule.txt */,
+				CE27A40F29D69BC800B3A74E /* testLockerRooms.txt */,
+				CEE755EC29D106CC0043D782 /* Preview Assets.xcassets */,
+			);
+			path = "Preview Content";
+			sourceTree = "<group>";
+		};
+		CEE755FC29D4491C0043D782 /* Helpers */ = {
+			isa = PBXGroup;
+			children = (
+				CE3C270D29D6BC58003C70CB /* Status.swift */,
+				CE3C270C29D6BC58003C70CB /* Game.swift */,
+				CE3C270E29D6BC58003C70CB /* Team.swift */,
+				CE3C270A29D6BC53003C70CB /* Date+StringHelpers.swift */,
+				CEE755F329D117CD0043D782 /* SharksIceParser.swift */,
+			);
+			name = Helpers;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		CEE755E029D106CB0043D782 /* PiedSniper */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = CEE755F029D106CC0043D782 /* Build configuration list for PBXNativeTarget "PiedSniper" */;
+			buildPhases = (
+				CEE755DD29D106CB0043D782 /* Sources */,
+				CEE755DE29D106CB0043D782 /* Frameworks */,
+				CEE755DF29D106CB0043D782 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = PiedSniper;
+			productName = PiedSnipers;
+			productReference = CEE755E129D106CB0043D782 /* PiedSniper.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		CEE755D929D106CB0043D782 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = 1;
+				LastSwiftUpdateCheck = 1420;
+				LastUpgradeCheck = 1420;
+				TargetAttributes = {
+					CEE755E029D106CB0043D782 = {
+						CreatedOnToolsVersion = 14.2;
+					};
+				};
+			};
+			buildConfigurationList = CEE755DC29D106CB0043D782 /* Build configuration list for PBXProject "PiedSniper" */;
+			compatibilityVersion = "Xcode 14.0";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = CEE755D829D106CB0043D782;
+			productRefGroup = CEE755E229D106CB0043D782 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				CEE755E029D106CB0043D782 /* PiedSniper */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		CEE755DF29D106CB0043D782 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				CE27A41029D69BEA00B3A74E /* testLockerRooms.txt in Resources */,
+				CE27A40D29D6929500B3A74E /* testSchedule.txt in Resources */,
+				CEE755ED29D106CC0043D782 /* Preview Assets.xcassets in Resources */,
+				CEE755E929D106CC0043D782 /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		CEE755DD29D106CB0043D782 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				CE3C270B29D6BC53003C70CB /* Date+StringHelpers.swift in Sources */,
+				CEE755E529D106CB0043D782 /* PiedSniperApp.swift in Sources */,
+				CE3C271129D6BC58003C70CB /* Team.swift in Sources */,
+				CEE755F429D117CD0043D782 /* SharksIceParser.swift in Sources */,
+				CE898DA629D59C1100DE8A76 /* CompletedGameCell.swift in Sources */,
+				CE3C270F29D6BC58003C70CB /* Game.swift in Sources */,
+				CE898DA829D59C3C00DE8A76 /* UpcomingGameCell.swift in Sources */,
+				CEE7560029D449F00043D782 /* Schedule.swift in Sources */,
+				CE27A41229D6B2C000B3A74E /* TodayGameCell.swift in Sources */,
+				CEE755F729D4334F0043D782 /* GameCell.swift in Sources */,
+				CE3C271029D6BC58003C70CB /* Status.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		CEE755EE29D106CC0043D782 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		CEE755EF29D106CC0043D782 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+			};
+			name = Release;
+		};
+		CEE755F129D106CC0043D782 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = PiedSniper/PiedSniper.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_ASSET_PATHS = "\"PiedSniper/Preview Content\"";
+				DEVELOPMENT_TEAM = 5ZJB9DN7AQ;
+				ENABLE_HARDENED_RUNTIME = YES;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = PiedSniper/Info.plist;
+				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphoneos*]" = YES;
+				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphonesimulator*]" = YES;
+				"INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents[sdk=iphoneos*]" = YES;
+				"INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents[sdk=iphonesimulator*]" = YES;
+				"INFOPLIST_KEY_UILaunchScreen_Generation[sdk=iphoneos*]" = YES;
+				"INFOPLIST_KEY_UILaunchScreen_Generation[sdk=iphonesimulator*]" = YES;
+				"INFOPLIST_KEY_UIStatusBarStyle[sdk=iphoneos*]" = UIStatusBarStyleDefault;
+				"INFOPLIST_KEY_UIStatusBarStyle[sdk=iphonesimulator*]" = UIStatusBarStyleDefault;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 16.2;
+				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks";
+				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = "@executable_path/../Frameworks";
+				MACOSX_DEPLOYMENT_TARGET = 13.1;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.ebarer.PiedSniper;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = auto;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		CEE755F229D106CC0043D782 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = PiedSniper/PiedSniper.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_ASSET_PATHS = "\"PiedSniper/Preview Content\"";
+				DEVELOPMENT_TEAM = 5ZJB9DN7AQ;
+				ENABLE_HARDENED_RUNTIME = YES;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = PiedSniper/Info.plist;
+				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphoneos*]" = YES;
+				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphonesimulator*]" = YES;
+				"INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents[sdk=iphoneos*]" = YES;
+				"INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents[sdk=iphonesimulator*]" = YES;
+				"INFOPLIST_KEY_UILaunchScreen_Generation[sdk=iphoneos*]" = YES;
+				"INFOPLIST_KEY_UILaunchScreen_Generation[sdk=iphonesimulator*]" = YES;
+				"INFOPLIST_KEY_UIStatusBarStyle[sdk=iphoneos*]" = UIStatusBarStyleDefault;
+				"INFOPLIST_KEY_UIStatusBarStyle[sdk=iphonesimulator*]" = UIStatusBarStyleDefault;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 16.2;
+				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks";
+				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = "@executable_path/../Frameworks";
+				MACOSX_DEPLOYMENT_TARGET = 13.1;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.ebarer.PiedSniper;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = auto;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		CEE755DC29D106CB0043D782 /* Build configuration list for PBXProject "PiedSniper" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				CEE755EE29D106CC0043D782 /* Debug */,
+				CEE755EF29D106CC0043D782 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		CEE755F029D106CC0043D782 /* Build configuration list for PBXNativeTarget "PiedSniper" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				CEE755F129D106CC0043D782 /* Debug */,
+				CEE755F229D106CC0043D782 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = CEE755D929D106CB0043D782 /* Project object */;
+}
