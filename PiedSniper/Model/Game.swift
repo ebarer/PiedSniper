@@ -26,11 +26,12 @@ struct Game {
     let date: Date
     var type: GameType? = .undefined
     let rink: String
-    var home: Team
     var away: Team
+    var home: Team
+    var lockerRoom: String?
 
-    var piedSniper: Team {
-        home.name == Team.piedSniper ? home : away
+    var isHome: Bool {
+        home.name == Team.piedSniper
     }
 
     var opponent: Team {
@@ -67,7 +68,6 @@ struct Game {
         return result
     }
 
-
     var debug: String {
         return "\(id) : \(type ?? .undefined)(\(date)) = \(result) -> \(home.name) \(home.score) - \(away.name) \(away.score)"
     }
@@ -79,40 +79,33 @@ extension Game {
     static let previewToday = Game(
         id: 365624,
         date: Calendar.current.date(byAdding: .minute, value: 10, to: Date()) ?? Date(),
-        rink: "Sharks",
+        rink: "Black (E)",
+        away: Team(name: "Double Secret Probation"),
         home: Team(name: Team.piedSniper),
-        away: Team(name: "Double Secret Probation")
+        lockerRoom: "B2"
     )
 
     static let previewUpcoming = Game(
         id: 12456,
         date: Calendar.current.date(byAdding: .day, value: 10, to: Date()) ?? Date(),
         rink: "Black (E)",
-        home: Team(name: Team.piedSniper, lockerRoom: "B4"),
-        away: Team(name: "Double Secret Probation", lockerRoom: "B2")
-    )
-
-    static let previewUpcomingOneRoom = Game(
-        id: 12456,
-        date: Calendar.current.date(byAdding: .day, value: 10, to: Date()) ?? Date(),
-        rink: "Black (E)",
-        home: Team(name: Team.piedSniper),
-        away: Team(name: "Double Secret Probation", lockerRoom: "B2")
+        away: Team(name: "Double Secret Probation"),
+        home: Team(name: Team.piedSniper)
     )
 
     static let previewCompletedWin = Game(
         id: 12456,
         date: Calendar.current.date(byAdding: .day, value: -10, to: Date()) ?? Date(),
         rink: "Black (E)",
-        home: Team(name: Team.piedSniper, score: "10"),
-        away: Team(name: "Double Secret Probation", score: "1")
+        away: Team(name: "Double Secret Probation", score: "1"),
+        home: Team(name: Team.piedSniper, score: "10")
     )
 
     static let previewCompletedLoss = Game(
         id: 12456,
         date: Calendar.current.date(byAdding: .day, value: -5, to: Date()) ?? Date(),
         rink: "Black (E)",
-        home: Team(name: Team.piedSniper, score: "2"),
-        away: Team(name: "Double Secret Probation", score: "3")
+        away: Team(name: "Double Secret Probation", score: "3"),
+        home: Team(name: Team.piedSniper, score: "2")
     )
 }

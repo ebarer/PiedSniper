@@ -58,7 +58,7 @@ struct CompletedGameCell: View {
                         .foregroundColor((game.winner == game.away && game.result == .win) ? .teal : .primary)
 
                 }
-                .multilineTextAlignment(.center)
+                .multilineTextAlignment(.leading)
                 .allowsTightening(true)
                 .truncationMode(.middle)
 

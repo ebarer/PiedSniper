@@ -8,11 +8,12 @@
 import SwiftUI
 
 struct Schedule: View {
-    @State var status = ScheduleStatus(preview: false)
+    @State private var status = ScheduleStatus(preview: true)
+
+    @State var gameToday: Game?
+    @State var upcomingGames = [Game]()
+    @State var completedGames = [Game]()
     @State var teamRecord = TeamRecord()
-    @State private var gameToday: Game?
-    @State private var upcomingGames = [Game]()
-    @State private var completedGames = [Game]()
 
     init(status: ScheduleStatus? = nil) {
         // Style title when displaying with large font
@@ -41,17 +42,10 @@ struct Schedule: View {
             } else {
                 List{
                     if let gameToday = gameToday {
-                        Section {
+                        Section("Game Today, \(Date.todayString)") {
                             GameCell(game: gameToday)
-                        } header: {
-                            HStack {
-                                Text("Game Today, \(todayString)")
-                                    .font(.headline)
-                                    .foregroundColor(.primary)
-
-                                Spacer()
-                            }
                         }
+                        .headerProminence(.increased)
                     }
 
                     Section("Upcoming") {
@@ -70,32 +64,42 @@ struct Schedule: View {
                             Spacer()
                             Text(teamRecord.description)
                         }
-                    }
+                    } footer: {
+                        VStack(alignment: .leading, spacing: 10) {
+                            Text("Last Sync: \(status.lastSyncString)")
+                                .font(.footnote)
+                                .foregroundColor(.secondary)
 
-                    Text("The Toronto Maple Leafs are trash. They're definitely going to lose in the first round of the playoffs. No need to specify a year, for it's a universal constant.")
-                        .font(.footnote)
-                        .foregroundColor(.secondary)
-                        .multilineTextAlignment(.leading)
-                        .padding([.top, .bottom], 20)
+                            Text("The Toronto Maple Leafs are definitely going to lose in the first round of the playoffs. No need to specify a year, it'll always be true.")
+                                .font(.footnote)
+                                .foregroundColor(.secondary)
+                                .multilineTextAlignment(.leading)
+                        }
+                    }
                 }
                 .listStyle(.plain)
                 .navigationTitle(Team.piedSniper)
             }
         }
+        .refreshable {
+            await reload(force: true)
+        }
         .task {
-            let result = await SharksIceParser.shared.loadSchedule(status: &status, record: &teamRecord)
-            gameToday = result.today
-            upcomingGames = result.upcoming
-            completedGames = result.completed
+            await reload()
         }
     }
 }
 
 extension Schedule {
-    var todayString: String {
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "MMM d"
-        return dateFormatter.string(from: Date())
+    func reload(force: Bool = false) async {
+        guard force || status.wantsReload(gameToday: gameToday) else {
+            return
+        }
+
+        let result = await SharksIceParser.shared.loadSchedule(status: &status, record: &teamRecord)
+        gameToday = result.today
+        upcomingGames = result.upcoming
+        completedGames = result.completed
     }
 }
 

@@ -15,27 +15,13 @@ struct UpcomingGameCell: View {
         if sizeCategory <= ContentSizeCategory.extraLarge {
             HStack {
                 VStack(alignment: .leading, spacing: 5) {
-                    HStack(spacing: 15) {
-                        if let lockerRoom = game.home.lockerRoom {
-                            Text(lockerRoom)
-                                .font(.headline)
-                                .foregroundColor(.teal)
-                        }
-                        Text(game.home.name)
-                            .font(.title2)
-                            .multilineTextAlignment(.leading)
-                    }
+                    Text(game.home.name)
+                        .font(.title2)
+                        .multilineTextAlignment(.leading)
 
-                    HStack(spacing: 15) {
-                        if let lockerRoom = game.away.lockerRoom {
-                            Text(lockerRoom)
-                                .font(.headline)
-                                .foregroundColor(.teal)
-                        }
-                        Text(game.away.name)
-                            .font(.title2)
-                            .multilineTextAlignment(.leading)
-                    }
+                    Text(game.away.name)
+                        .font(.title2)
+                        .multilineTextAlignment(.leading)
                 }
 
                 Spacer()
@@ -44,8 +30,10 @@ struct UpcomingGameCell: View {
                     Text(game.date.dayString)
                         .font(.headline)
                         .multilineTextAlignment(.trailing)
+
                     Text(game.date.timeString)
                         .multilineTextAlignment(.trailing)
+
                     Text(game.rink)
                         .font(.headline)
                         .multilineTextAlignment(.trailing)
@@ -57,12 +45,15 @@ struct UpcomingGameCell: View {
                 VStack(alignment: .leading, spacing: 3) {
                     Text(game.date.dateString)
                         .font(.headline)
-                    Text(game.home.nameAndLockerRoom)
+
+                    Text(game.home.name)
                         .truncationMode(.middle)
                         .allowsTightening(true)
-                    Text(game.away.nameAndLockerRoom)
+
+                    Text(game.away.name)
                         .truncationMode(.middle)
                         .allowsTightening(true)
+                    
                     Text(game.rink)
                         .font(.headline)
                         .foregroundColor(.teal)
@@ -78,12 +69,7 @@ struct UpcomingGameCell: View {
 
 struct UpcomingGameCell_Previews: PreviewProvider {
     static var previews: some View {
-//        VStack(spacing: 50) {
-        List {
-            UpcomingGameCell(game: Game.previewUpcoming)
-            UpcomingGameCell(game: Game.previewUpcomingOneRoom)
-        }
-        .listStyle(.plain)
-        .previewLayout(.sizeThatFits)
+        UpcomingGameCell(game: Game.previewUpcoming)
+            .previewLayout(.sizeThatFits)
     }
 }

@@ -12,15 +12,21 @@ extension Date {
         Calendar.current.isDateInToday(self)
     }
 
+    static var todayString: String {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "MMM d"
+        return dateFormatter.string(from: Date())
+    }
+
     var dateString: String {
         let formatter = DateFormatter()
-        formatter.dateFormat = "MMM d, h:mm a"
+        formatter.dateFormat = "E, MMM d, h:mm a"
         return formatter.string(from: self)
     }
 
     var dayString: String {
         let formatter = DateFormatter()
-        formatter.dateFormat = "MMM d"
+        formatter.dateFormat = "E, MMM d"
         return formatter.string(from: self)
     }
 

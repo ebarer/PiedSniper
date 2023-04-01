@@ -13,21 +13,25 @@ struct TodayGameCell: View {
 
     var body: some View {
         VStack(alignment: .leading) {
-            Text("\(isHome ? "vs." : "@") \(game.opponent.name)")
+            Text("\(game.isHome ? "vs." : "at") \(game.opponent.name)")
                 .font(.headline)
 
             Text(summaryString)
 
-            if let lockerRoomString = lockerRoomString {
-                Text(lockerRoomString)
-            }
+            Text(game.isHome ? "Light Jersey" : "Dark Jersey")
         }
     }
 }
 
 extension TodayGameCell {
     var summaryString: AttributedString {
-        var string = AttributedString("\(game.date.timeString) on \(game.rink)")
+        var rinkString = "\(game.rink)"
+        if let lockerRoom = game.lockerRoom {
+            rinkString.append(" \(lockerRoom)")
+        }
+
+        let summaryString = "\(game.date.timeString) on \(rinkString)"
+        var string = AttributedString(summaryString)
         string.font = .title2
         string.foregroundColor = .label
 
@@ -36,44 +40,18 @@ extension TodayGameCell {
             string[range].foregroundColor = .teal
         }
 
-        if let range = string.range(of: game.rink) {
+        if let range = string.range(of: rinkString) {
             string[range].font = .title2.bold()
             string[range].foregroundColor = .teal
         }
 
         return string
     }
-
-    var lockerRoomString: AttributedString? {
-        guard let lockerRoom = game.piedSniper.lockerRoom else {
-            return nil
-        }
-
-        var string = AttributedString("Locker: \(lockerRoom)")
-        string.font = .headline
-        string.foregroundColor = .label
-
-        if let range = string.range(of: lockerRoom) {
-            string[range].font = .headline.bold()
-            string[range].foregroundColor = .teal
-        }
-
-        return string
-    }
-
-    var isHome: Bool {
-        game.home.name == Team.piedSniper
-    }
 }
 
 struct TodayGameCell_Previews: PreviewProvider {
     static var previews: some View {
-        TodayGameCell(game: Game.previewUpcoming)
-
-        VStack(spacing: 50) {
-            TodayGameCell(game: Game.previewUpcoming)
-            TodayGameCell(game: Game.previewUpcomingOneRoom)
-        }
-        .previewLayout(.sizeThatFits)
+        TodayGameCell(game: Game.previewToday)
+            .previewLayout(.sizeThatFits)
     }
 }

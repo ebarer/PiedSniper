@@ -24,13 +24,16 @@ struct SharksIceParser {
         var result: (today: Game?, upcoming: [Game], completed: [Game]) = (nil, [], [])
 
         let scrapedData = status.preview ? load(file: "testSchedule") : await scrape(url: piedSniperURL)
-        guard let data = sanitize(data: scrapedData) else { return result }
+        guard let data = sanitize(data: scrapedData) else {
+            status.gamesLoaded = 0
+            status.lastSyncDate = Date()
+            status.completed = true
+            return result
+        }
 
         let games = parseGames(in: data)
-        status.gamesLoaded = games.count
-
         games.forEach { game in
-            // print(game.debug)
+//            print(game.debug)
 
             if game.date.isToday {
                 result.today = game
@@ -47,25 +50,26 @@ struct SharksIceParser {
         }
 
         if result.today != nil {
-            let rooms = await fetchLockerRooms(for: result.today, preview: status.preview)
-            result.today?.home.lockerRoom = rooms.home
-            result.today?.away.lockerRoom = rooms.away
+            let lockerRoom = await fetchLockerRoom(for: result.today, preview: status.preview)
+            result.today?.lockerRoom = lockerRoom
         }
 
+        status.gamesLoaded = games.count
+        status.lastSyncDate = Date()
         status.completed = true
         return result
     }
 
-    /// Attempt to fetch the locker rooms for the specified game.
+    /// Attempt to fetch the Pied Sniper locker room for the specified game.
     /// - Parameters:
     ///   - game: Provide a game to try to find the designated locker rooms. The game must be today or this fetch will fail.
     ///   - preview: Indicate if preview data should be used instead of loading live results.
-    /// - Returns: Returns a tuple containing the home and away dressing rooms.
-    func fetchLockerRooms(for game: Game?, preview: Bool) async -> (home: String?, away: String?) {
-        var rooms: (home: String?, away: String?) = (nil, nil)
-
+    /// - Returns: Returns the Pied Sniper locker room.
+    func fetchLockerRoom(for game: Game?, preview: Bool) async -> String? {
         let scrapedData = preview ? load(file: "testLockerRooms") : await scrape(url: todaysGamesURL)
-        guard let data = sanitize(data: scrapedData), let gameID = game?.id else { return rooms }
+        guard let data = sanitize(data: scrapedData),
+              let game = game
+        else { return nil }
 
         // This could probably be more efficient by just filtering for the row with the matching ID at the top, instead of iterating each game.
         // However, given the data set is minimal (< 10 games) that's likely a premature optimization.
@@ -76,14 +80,13 @@ struct SharksIceParser {
             guard sanitizedGameData.count >= 9 else { continue }
 
             let id = Int(sanitizedGameData[1].replacingOccurrences(of: "*", with: "")) ?? 0
-            if gameID == id {
-                rooms.home = sanitizedGameData[7]
-                rooms.away = sanitizedGameData[9]
-                return rooms
+            if game.id == id {
+                let lockerRoom = game.isHome ? sanitizedGameData[7] : sanitizedGameData[9]
+                return lockerRoom
             }
         }
 
-        return rooms
+        return nil
     }
 }
 
@@ -109,26 +112,24 @@ extension SharksIceParser {
     /// - Parameter file: File to load.
     /// - Returns: Returns unsanitized output for the specified file.
     private func load(file: String?) -> String? {
-        guard
-            let fileName = file,
-            let path = Bundle.main.path(forResource: fileName, ofType: "txt")
+        guard let fileName = file,
+              let path = Bundle.main.path(forResource: fileName, ofType: "txt")
         else { return nil }
 
         return try? String(contentsOfFile: path, encoding: .utf8)
     }
 }
 
-// MARK: - Data Parsers
+// MARK: - Data Manipulators
 
 extension SharksIceParser {
     /// Process the passed data by stripping out the HTML table tags and trimming whitespace.
     /// - Parameter data: Data to process.
     /// - Returns: Returns a separated set of strings from the specific URL if successful.
     private func sanitize(data: String?) -> [String]? {
-        guard
-            let decodedData = data,
-            let trimRangeStart = decodedData.range(of: "</th></tr>"),
-            let trimRangeEnd = decodedData.range(of: "</table>")
+        guard let decodedData = data,
+              let trimRangeStart = decodedData.range(of: "</th></tr>"),
+              let trimRangeEnd = decodedData.range(of: "</table>")
         else {
             return nil
         }
@@ -152,7 +153,7 @@ extension SharksIceParser {
 
         for gameData in data {
             let sanitizedGameData = gameData.components(separatedBy: "&").map { $0.trimmingCharacters(in: .whitespaces) }
-            // print(sanitizedGameData)
+//            print(sanitizedGameData)
 
             // There are 11 fields that are used from the schedule page
             guard sanitizedGameData.count >= 11 else { continue }
@@ -167,7 +168,7 @@ extension SharksIceParser {
             dateFormatter.timeZone = .current
             guard let date = dateFormatter.date(from: dateString) else { continue }
 
-            let completed = date.compare(Date()) == .orderedAscending
+            let completed = date.compare(Date()) == .orderedAscending && sanitizedGameData.count > 11
 
             var rink = sanitizedGameData[4]
             if let upperBound = rink.range(of: "San Jose ")?.upperBound {
@@ -190,8 +191,8 @@ extension SharksIceParser {
                 date: date,
                 type: type,
                 rink: rink,
-                home: Team(name: sanitizedGameData[7], score: completed ? sanitizedGameData[8] : "0"),
-                away: Team(name: completed ? sanitizedGameData[9] : sanitizedGameData[8], score: completed ? sanitizedGameData[10] : "0")
+                away: Team(name: sanitizedGameData[7], score: completed ? sanitizedGameData[8] : "0"),
+                home: Team(name: completed ? sanitizedGameData[9] : sanitizedGameData[8], score: completed ? sanitizedGameData[10] : "0")
             )
 
             games.append(game)
