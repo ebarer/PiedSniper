@@ -1,5 +1,5 @@
 //
-//  SharksIceParser.swift
+//  ScheduleParser.swift
 //  PiedSniper
 //
 //  Created by Elliot Barer on 3/26/23.
@@ -7,13 +7,12 @@
 
 import Foundation
 
-struct SharksIceParser {
-    // URLs
-    let piedSniperURL = URL(string: "https://stats.sharksice.timetoscore.com/display-schedule?team=4638&season=56&league=1&stat_class=1")
-    let todaysGamesURL = URL(string: "https://stats.sharksice.timetoscore.com/display-lr-assignments.php")
+struct ScheduleParser {
+    let piedSniperURL = URL(string: "https://stats.sharksice.timetoscore.com/display-schedule?team=4638")
+    let todaysGamesURL = URL(string: "https://stats.sharksice.timetoscore.com/display-lr-assignments")
 
     // Singleton
-    static let shared = SharksIceParser()
+    static let shared = ScheduleParser()
 
     /// Load the schedule for Pied Snipers.
     /// - Parameters:
@@ -23,15 +22,15 @@ struct SharksIceParser {
     func loadSchedule(status: inout ScheduleStatus, record: inout TeamRecord) async -> (today: Game?, upcoming: [Game], completed: [Game]) {
         var result: (today: Game?, upcoming: [Game], completed: [Game]) = (nil, [], [])
 
-        let scrapedData = status.preview ? load(file: "testSchedule") : await scrape(url: piedSniperURL)
-        guard let data = sanitize(data: scrapedData) else {
+        let scrapedData = status.preview ? Bundle.main.load(file: "testSchedule") : await piedSniperURL?.scrape()
+        guard let data = sanitize(gamesData: scrapedData) else {
             status.gamesLoaded = 0
             status.lastSyncDate = Date()
             status.completed = true
             return result
         }
 
-        let games = parseGames(in: data)
+        let games = parse(gamesData: data)
         games.forEach { game in
 //            print(game.debug)
 
@@ -58,76 +57,17 @@ struct SharksIceParser {
         status.lastSyncDate = Date()
         status.completed = true
         return result
-    }
-
-    /// Attempt to fetch the Pied Sniper locker room for the specified game.
-    /// - Parameters:
-    ///   - game: Provide a game to try to find the designated locker rooms. The game must be today or this fetch will fail.
-    ///   - preview: Indicate if preview data should be used instead of loading live results.
-    /// - Returns: Returns the Pied Sniper locker room.
-    func fetchLockerRoom(for game: Game?, preview: Bool) async -> String? {
-        let scrapedData = preview ? load(file: "testLockerRooms") : await scrape(url: todaysGamesURL)
-        guard let data = sanitize(data: scrapedData),
-              let game = game
-        else { return nil }
-
-        // This could probably be more efficient by just filtering for the row with the matching ID at the top, instead of iterating each game.
-        // However, given the data set is minimal (< 10 games) that's likely a premature optimization.
-        for gameData in data {
-            let sanitizedGameData = gameData.components(separatedBy: "&").map { $0.trimmingCharacters(in: .whitespaces) }
-
-            // There are 9 fields that are used from the upcoming games page
-            guard sanitizedGameData.count >= 9 else { continue }
-
-            let id = Int(sanitizedGameData[1].replacingOccurrences(of: "*", with: "")) ?? 0
-            if game.id == id {
-                let lockerRoom = game.isHome ? sanitizedGameData[7] : sanitizedGameData[9]
-                return lockerRoom
-            }
-        }
-
-        return nil
-    }
+    }    
 }
 
-// MARK: - Source Helpers
+// MARK: - Game Parser
 
-extension SharksIceParser {
-    /// Load the URL, scrape the HTML, then sanitize and separate the results.
-    /// - Parameters:
-    ///   - url: URL to scrape.
-    /// - Returns: Returns unsanitized output for the specified URL.
-    private func scrape(url: URL?) async -> String? {
-        guard let url = url else { return nil }
-
-        do {
-            let (data, _) = try await URLSession.shared.data(from: url)
-            return String(data: data, encoding: .utf8)
-        } catch {
-            return nil
-        }
-    }
-
-    /// Load the contents of the specified file.
-    /// - Parameter file: File to load.
-    /// - Returns: Returns unsanitized output for the specified file.
-    private func load(file: String?) -> String? {
-        guard let fileName = file,
-              let path = Bundle.main.path(forResource: fileName, ofType: "txt")
-        else { return nil }
-
-        return try? String(contentsOfFile: path, encoding: .utf8)
-    }
-}
-
-// MARK: - Data Manipulators
-
-extension SharksIceParser {
-    /// Process the passed data by stripping out the HTML table tags and trimming whitespace.
-    /// - Parameter data: Data to process.
+extension ScheduleParser {
+    /// Process the passed schedule data by stripping out the HTML table tags and trimming whitespace.
+    /// - Parameter gamesData: Game schedule data to process.
     /// - Returns: Returns a separated set of strings from the specific URL if successful.
-    private func sanitize(data: String?) -> [String]? {
-        guard let decodedData = data,
+    private func sanitize(gamesData: String?) -> [String]? {
+        guard let decodedData = gamesData,
               let trimRangeStart = decodedData.range(of: "</th></tr>"),
               let trimRangeEnd = decodedData.range(of: "</table>")
         else {
@@ -135,12 +75,13 @@ extension SharksIceParser {
         }
 
         var sanitizedData = String(decodedData[trimRangeStart.upperBound..<trimRangeEnd.lowerBound])
-        sanitizedData = sanitizedData.replacingOccurrences(of: "&nbsp;", with: "")
+        sanitizedData = sanitizedData
+            .replacingOccurrences(of: "&nbsp;", with: "")
+            .replacingOccurrences(of: "Double Secret Probation", with: "DSP")
 
         var separatedData = sanitizedData.components(separatedBy: "</tr>")
         separatedData = separatedData.map { data in
-            data
-                .replacingOccurrences(of: "<[^>]+>", with: "/", options: .regularExpression)
+            data.replacingOccurrences(of: "<[^>]+>", with: "/", options: .regularExpression)
                 .replacingOccurrences(of: "/+", with: "&", options: .regularExpression)
                 .trimmingCharacters(in: .whitespaces)
         }
@@ -148,10 +89,13 @@ extension SharksIceParser {
         return separatedData
     }
 
-    private func parseGames(in data: [String]) -> [Game] {
+    /// Extract game information from the sanitized data.
+    /// - Parameter gamesData: Sanitized data processed from the schedule page.
+    /// - Returns: Return a list of scheduled games.
+    private func parse(gamesData: [String]) -> [Game] {
         var games = [Game]()
 
-        for gameData in data {
+        for gameData in gamesData {
             let sanitizedGameData = gameData.components(separatedBy: "&").map { $0.trimmingCharacters(in: .whitespaces) }
 //            print(sanitizedGameData)
 
@@ -199,6 +143,35 @@ extension SharksIceParser {
         }
 
         return games
+    }
+
+    /// Attempt to fetch the Pied Sniper locker room for the specified game.
+    /// - Parameters:
+    ///   - game: Provide a game to try to find the designated locker rooms. The game must be today or this fetch will fail.
+    ///   - preview: Indicate if preview data should be used instead of loading live results.
+    /// - Returns: Returns the Pied Sniper locker room.
+    private func fetchLockerRoom(for game: Game?, preview: Bool) async -> String? {
+        let scrapedData = preview ? Bundle.main.load(file: "testLockerRooms") : await todaysGamesURL?.scrape()
+        guard let data = sanitize(gamesData: scrapedData),
+              let game = game
+        else { return nil }
+
+        // This could probably be more efficient by just filtering for the row with the matching ID at the top, instead of iterating each game.
+        // However, given the data set is minimal (< 10 games) that's likely a premature optimization.
+        for gameData in data {
+            let sanitizedGameData = gameData.components(separatedBy: "&").map { $0.trimmingCharacters(in: .whitespaces) }
+
+            // There are 9 fields that are used from the upcoming games page
+            guard sanitizedGameData.count >= 9 else { continue }
+
+            let id = Int(sanitizedGameData[1].replacingOccurrences(of: "*", with: "")) ?? 0
+            if game.id == id {
+                let lockerRoom = game.isHome ? sanitizedGameData[7] : sanitizedGameData[9]
+                return lockerRoom
+            }
+        }
+
+        return nil
     }
 }
 

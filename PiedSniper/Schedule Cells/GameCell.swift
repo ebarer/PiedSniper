@@ -9,7 +9,6 @@ import SwiftUI
 
 struct GameCell: View {
     var game: Game
-    @Environment(\.sizeCategory) var sizeCategory
 
     var body: some View {
         Group {

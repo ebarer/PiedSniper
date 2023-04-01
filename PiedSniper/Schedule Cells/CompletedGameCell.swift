@@ -8,8 +8,9 @@
 import SwiftUI
 
 struct CompletedGameCell: View {
-    var game: Game
     @Environment(\.sizeCategory) var sizeCategory
+
+    var game: Game
 
     var body: some View {
         if sizeCategory < ContentSizeCategory.accessibilityExtraLarge {
@@ -21,16 +22,6 @@ struct CompletedGameCell: View {
 
                 VStack(alignment: .leading, spacing: 5) {
                     HStack {
-                        Text(game.home.name)
-                            .multilineTextAlignment(.leading)
-                        Spacer()
-                        Text(game.home.score)
-                    }
-                    .font(.title2)
-                    .fontWeight((game.winner == game.home) ? .bold : .regular)
-                    .foregroundColor((game.winner == game.home && game.result == .win) ? .teal : .primary)
-
-                    HStack {
                         Text(game.away.name)
                             .multilineTextAlignment(.leading)
                         Spacer()
@@ -39,6 +30,16 @@ struct CompletedGameCell: View {
                     .font(.title2)
                     .fontWeight((game.winner == game.away) ? .bold : .regular)
                     .foregroundColor((game.winner == game.away && game.result == .win) ? .teal : .primary)
+
+                    HStack {
+                        Text(game.home.name)
+                            .multilineTextAlignment(.leading)
+                        Spacer()
+                        Text(game.home.score)
+                    }
+                    .font(.title2)
+                    .fontWeight((game.winner == game.home) ? .bold : .regular)
+                    .foregroundColor((game.winner == game.home && game.result == .win) ? .teal : .primary)
                 }
             }
         } else {

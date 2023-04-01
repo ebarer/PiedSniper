@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		CE0F47E129E2B8DE000B4BD3 /* StandingsParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE0F47E029E2B8DE000B4BD3 /* StandingsParser.swift */; };
+		CE0F47E329E2B946000B4BD3 /* SourceHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE0F47E229E2B946000B4BD3 /* SourceHelpers.swift */; };
+		CE1DFF0129D98AB700181176 /* StandingsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE1DFF0029D98AB700181176 /* StandingsCell.swift */; };
 		CE27A40D29D6929500B3A74E /* testSchedule.txt in Resources */ = {isa = PBXBuildFile; fileRef = CE27A40C29D6929500B3A74E /* testSchedule.txt */; };
 		CE27A41029D69BEA00B3A74E /* testLockerRooms.txt in Resources */ = {isa = PBXBuildFile; fileRef = CE27A40F29D69BC800B3A74E /* testLockerRooms.txt */; };
 		CE27A41229D6B2C000B3A74E /* TodayGameCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE27A41129D6B2C000B3A74E /* TodayGameCell.swift */; };
@@ -16,15 +19,20 @@
 		CE3C271129D6BC58003C70CB /* Team.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE3C270E29D6BC58003C70CB /* Team.swift */; };
 		CE898DA629D59C1100DE8A76 /* CompletedGameCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE898DA529D59C1100DE8A76 /* CompletedGameCell.swift */; };
 		CE898DA829D59C3C00DE8A76 /* UpcomingGameCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE898DA729D59C3C00DE8A76 /* UpcomingGameCell.swift */; };
+		CEB3813729DC117B00539DD9 /* testStandings.txt in Resources */ = {isa = PBXBuildFile; fileRef = CEB3813629DC117B00539DD9 /* testStandings.txt */; };
 		CEE755E529D106CB0043D782 /* PiedSniperApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEE755E429D106CB0043D782 /* PiedSniperApp.swift */; };
 		CEE755E929D106CC0043D782 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CEE755E829D106CC0043D782 /* Assets.xcassets */; };
 		CEE755ED29D106CC0043D782 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CEE755EC29D106CC0043D782 /* Preview Assets.xcassets */; };
-		CEE755F429D117CD0043D782 /* SharksIceParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEE755F329D117CD0043D782 /* SharksIceParser.swift */; };
+		CEE755F429D117CD0043D782 /* ScheduleParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEE755F329D117CD0043D782 /* ScheduleParser.swift */; };
 		CEE755F729D4334F0043D782 /* GameCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEE755F629D4334F0043D782 /* GameCell.swift */; };
 		CEE7560029D449F00043D782 /* Schedule.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEE755FF29D449F00043D782 /* Schedule.swift */; };
+		CEF71D3E29D83E5500C4779E /* Standings.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEF71D3D29D83E5500C4779E /* Standings.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		CE0F47E029E2B8DE000B4BD3 /* StandingsParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StandingsParser.swift; sourceTree = "<group>"; };
+		CE0F47E229E2B946000B4BD3 /* SourceHelpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SourceHelpers.swift; sourceTree = "<group>"; };
+		CE1DFF0029D98AB700181176 /* StandingsCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StandingsCell.swift; sourceTree = "<group>"; };
 		CE27A40C29D6929500B3A74E /* testSchedule.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = testSchedule.txt; sourceTree = "<group>"; };
 		CE27A40F29D69BC800B3A74E /* testLockerRooms.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = testLockerRooms.txt; sourceTree = "<group>"; };
 		CE27A41129D6B2C000B3A74E /* TodayGameCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodayGameCell.swift; sourceTree = "<group>"; };
@@ -34,15 +42,17 @@
 		CE3C270E29D6BC58003C70CB /* Team.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Team.swift; path = Model/Team.swift; sourceTree = "<group>"; };
 		CE898DA529D59C1100DE8A76 /* CompletedGameCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompletedGameCell.swift; sourceTree = "<group>"; };
 		CE898DA729D59C3C00DE8A76 /* UpcomingGameCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpcomingGameCell.swift; sourceTree = "<group>"; };
+		CEB3813629DC117B00539DD9 /* testStandings.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = testStandings.txt; sourceTree = "<group>"; };
 		CEE755E129D106CB0043D782 /* PiedSniper.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PiedSniper.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		CEE755E429D106CB0043D782 /* PiedSniperApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PiedSniperApp.swift; sourceTree = "<group>"; };
 		CEE755E829D106CC0043D782 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		CEE755EA29D106CC0043D782 /* PiedSniper.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = PiedSniper.entitlements; sourceTree = "<group>"; };
 		CEE755EC29D106CC0043D782 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
-		CEE755F329D117CD0043D782 /* SharksIceParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SharksIceParser.swift; sourceTree = "<group>"; };
-		CEE755F529D429A70043D782 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
+		CEE755F329D117CD0043D782 /* ScheduleParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleParser.swift; sourceTree = "<group>"; };
+		CEE755F529D429A70043D782 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		CEE755F629D4334F0043D782 /* GameCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameCell.swift; sourceTree = "<group>"; };
 		CEE755FF29D449F00043D782 /* Schedule.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Schedule.swift; sourceTree = "<group>"; };
+		CEF71D3D29D83E5500C4779E /* Standings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Standings.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -56,7 +66,16 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		CE27A40B29D5A32B00B3A74E /* GameCells */ = {
+		CE0F47E429E2B94C000B4BD3 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				CE3C270A29D6BC53003C70CB /* Date+StringHelpers.swift */,
+				CE0F47E229E2B946000B4BD3 /* SourceHelpers.swift */,
+			);
+			name = Extensions;
+			sourceTree = "<group>";
+		};
+		CE27A40B29D5A32B00B3A74E /* Schedule Cells */ = {
 			isa = PBXGroup;
 			children = (
 				CEE755F629D4334F0043D782 /* GameCell.swift */,
@@ -64,7 +83,17 @@
 				CE898DA729D59C3C00DE8A76 /* UpcomingGameCell.swift */,
 				CE898DA529D59C1100DE8A76 /* CompletedGameCell.swift */,
 			);
-			path = GameCells;
+			path = "Schedule Cells";
+			sourceTree = "<group>";
+		};
+		CE7E790B29DD382E00E58E83 /* Assets */ = {
+			isa = PBXGroup;
+			children = (
+				CEE755F529D429A70043D782 /* Info.plist */,
+				CEE755EA29D106CC0043D782 /* PiedSniper.entitlements */,
+				CEE755E829D106CC0043D782 /* Assets.xcassets */,
+			);
+			name = Assets;
 			sourceTree = "<group>";
 		};
 		CEE755D829D106CB0043D782 = {
@@ -86,13 +115,14 @@
 		CEE755E329D106CB0043D782 /* PiedSniper */ = {
 			isa = PBXGroup;
 			children = (
-				CEE755F529D429A70043D782 /* Info.plist */,
-				CEE755EA29D106CC0043D782 /* PiedSniper.entitlements */,
-				CEE755E829D106CC0043D782 /* Assets.xcassets */,
+				CE7E790B29DD382E00E58E83 /* Assets */,
 				CEE755E429D106CB0043D782 /* PiedSniperApp.swift */,
 				CEE755FF29D449F00043D782 /* Schedule.swift */,
-				CE27A40B29D5A32B00B3A74E /* GameCells */,
-				CEE755FC29D4491C0043D782 /* Helpers */,
+				CE27A40B29D5A32B00B3A74E /* Schedule Cells */,
+				CEF71D3D29D83E5500C4779E /* Standings.swift */,
+				CE1DFF0029D98AB700181176 /* StandingsCell.swift */,
+				CEE755FC29D4491C0043D782 /* Model */,
+				CE0F47E429E2B94C000B4BD3 /* Extensions */,
 				CEE755EB29D106CC0043D782 /* Preview Content */,
 			);
 			path = PiedSniper;
@@ -103,21 +133,23 @@
 			children = (
 				CE27A40C29D6929500B3A74E /* testSchedule.txt */,
 				CE27A40F29D69BC800B3A74E /* testLockerRooms.txt */,
+				CEB3813629DC117B00539DD9 /* testStandings.txt */,
 				CEE755EC29D106CC0043D782 /* Preview Assets.xcassets */,
 			);
 			path = "Preview Content";
 			sourceTree = "<group>";
 		};
-		CEE755FC29D4491C0043D782 /* Helpers */ = {
+		CEE755FC29D4491C0043D782 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				CEE755F329D117CD0043D782 /* ScheduleParser.swift */,
+				CE0F47E029E2B8DE000B4BD3 /* StandingsParser.swift */,
+				CEE2853F29E000600082F7DC /* ScoresheetParser.swift */,
 				CE3C270D29D6BC58003C70CB /* Status.swift */,
 				CE3C270C29D6BC58003C70CB /* Game.swift */,
 				CE3C270E29D6BC58003C70CB /* Team.swift */,
-				CE3C270A29D6BC53003C70CB /* Date+StringHelpers.swift */,
-				CEE755F329D117CD0043D782 /* SharksIceParser.swift */,
 			);
-			name = Helpers;
+			name = Model;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -148,7 +180,7 @@
 			attributes = {
 				BuildIndependentTargetsInParallel = 1;
 				LastSwiftUpdateCheck = 1420;
-				LastUpgradeCheck = 1420;
+				LastUpgradeCheck = 1430;
 				TargetAttributes = {
 					CEE755E029D106CB0043D782 = {
 						CreatedOnToolsVersion = 14.2;
@@ -180,6 +212,7 @@
 			files = (
 				CE27A41029D69BEA00B3A74E /* testLockerRooms.txt in Resources */,
 				CE27A40D29D6929500B3A74E /* testSchedule.txt in Resources */,
+				CEB3813729DC117B00539DD9 /* testStandings.txt in Resources */,
 				CEE755ED29D106CC0043D782 /* Preview Assets.xcassets in Resources */,
 				CEE755E929D106CC0043D782 /* Assets.xcassets in Resources */,
 			);
@@ -195,11 +228,16 @@
 				CE3C270B29D6BC53003C70CB /* Date+StringHelpers.swift in Sources */,
 				CEE755E529D106CB0043D782 /* PiedSniperApp.swift in Sources */,
 				CE3C271129D6BC58003C70CB /* Team.swift in Sources */,
-				CEE755F429D117CD0043D782 /* SharksIceParser.swift in Sources */,
+				CEE755F429D117CD0043D782 /* ScheduleParser.swift in Sources */,
 				CE898DA629D59C1100DE8A76 /* CompletedGameCell.swift in Sources */,
+				CEF71D3E29D83E5500C4779E /* Standings.swift in Sources */,
 				CE3C270F29D6BC58003C70CB /* Game.swift in Sources */,
 				CE898DA829D59C3C00DE8A76 /* UpcomingGameCell.swift in Sources */,
+				CE0F47E129E2B8DE000B4BD3 /* StandingsParser.swift in Sources */,
+				CEE2854029E000600082F7DC /* ScoresheetParser.swift in Sources */,
+				CE0F47E329E2B946000B4BD3 /* SourceHelpers.swift in Sources */,
 				CEE7560029D449F00043D782 /* Schedule.swift in Sources */,
+				CE1DFF0129D98AB700181176 /* StandingsCell.swift in Sources */,
 				CE27A41229D6B2C000B3A74E /* TodayGameCell.swift in Sources */,
 				CEE755F729D4334F0043D782 /* GameCell.swift in Sources */,
 				CE3C271029D6BC58003C70CB /* Status.swift in Sources */,
@@ -242,6 +280,7 @@
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
+				DEAD_CODE_STRIPPING = YES;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
@@ -300,6 +339,7 @@
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
+				DEAD_CODE_STRIPPING = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
@@ -326,6 +366,7 @@
 				CODE_SIGN_ENTITLEMENTS = PiedSniper/PiedSniper.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_ASSET_PATHS = "\"PiedSniper/Preview Content\"";
 				DEVELOPMENT_TEAM = 5ZJB9DN7AQ;
 				ENABLE_HARDENED_RUNTIME = YES;
@@ -365,6 +406,7 @@
 				CODE_SIGN_ENTITLEMENTS = PiedSniper/PiedSniper.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_ASSET_PATHS = "\"PiedSniper/Preview Content\"";
 				DEVELOPMENT_TEAM = 5ZJB9DN7AQ;
 				ENABLE_HARDENED_RUNTIME = YES;

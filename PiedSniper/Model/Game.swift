@@ -12,6 +12,7 @@ struct Game {
         case undefined
         case preseason
         case regularSeason
+        case playoffs
     }
 
     enum GameResult {
@@ -19,7 +20,7 @@ struct Game {
         case win
         case tie
         case loss
-        case overtimeLoss
+        case overtime
     }
 
     let id: Int

@@ -9,7 +9,6 @@ import SwiftUI
 
 struct TodayGameCell: View {
     var game: Game
-    @Environment(\.sizeCategory) var sizeCategory
 
     var body: some View {
         VStack(alignment: .leading) {

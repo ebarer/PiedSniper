@@ -8,18 +8,19 @@
 import SwiftUI
 
 struct UpcomingGameCell: View {
-    var game: Game
     @Environment(\.sizeCategory) var sizeCategory
+
+    var game: Game
 
     var body: some View {
         if sizeCategory <= ContentSizeCategory.extraLarge {
             HStack {
                 VStack(alignment: .leading, spacing: 5) {
-                    Text(game.home.name)
+                    Text(game.away.name)
                         .font(.title2)
                         .multilineTextAlignment(.leading)
 
-                    Text(game.away.name)
+                    Text("at \(game.home.name)")
                         .font(.title2)
                         .multilineTextAlignment(.leading)
                 }
