@@ -17,7 +17,7 @@ struct CompletedGameCell: View {
             HStack(spacing: 15) {
                 Text(game.date.verticalDayString)
                     .font(.headline)
-                    .foregroundColor(game.result == .win ? .teal : .primary)
+                    .foregroundColor(dateTextColor)
                     .multilineTextAlignment(.center)
 
                 VStack(alignment: .leading, spacing: 5) {
@@ -25,21 +25,21 @@ struct CompletedGameCell: View {
                         Text(game.away.name)
                             .multilineTextAlignment(.leading)
                         Spacer()
-                        Text(game.away.score)
+                        Text("\(game.away.result!.goals.final)")
+                            .monospacedDigit()
                     }
                     .font(.title2)
-                    .fontWeight((game.winner == game.away) ? .bold : .regular)
-                    .foregroundColor((game.winner == game.away && game.result == .win) ? .teal : .primary)
+                    .foregroundColor(game.away.isPiedSniper ? piedSniperTextColor : opponentTextColor)
 
                     HStack {
                         Text(game.home.name)
                             .multilineTextAlignment(.leading)
                         Spacer()
-                        Text(game.home.score)
+                        Text("\(game.home.result!.goals.final)")
+                            .monospacedDigit()
                     }
                     .font(.title2)
-                    .fontWeight((game.winner == game.home) ? .bold : .regular)
-                    .foregroundColor((game.winner == game.home && game.result == .win) ? .teal : .primary)
+                    .foregroundColor(game.home.isPiedSniper ? piedSniperTextColor : opponentTextColor)
                 }
             }
         } else {
@@ -48,15 +48,13 @@ struct CompletedGameCell: View {
                     Text(game.date.dayString)
                         .font(.headline)
 
-                    Text("\(game.home.name) \(game.home.score)")
+                    Text("\(game.away.name) \(game.away.result!.goals.final)")
                         .font(.title2)
-                        .fontWeight((game.winner == game.home) ? .bold : .regular)
-                        .foregroundColor((game.winner == game.home && game.result == .win) ? .teal : .primary)
+                        .foregroundColor(game.away.isPiedSniper ? piedSniperTextColor : opponentTextColor)
 
-                    Text("\(game.away.name) \(game.away.score)")
+                    Text("\(game.home.name) \(game.home.result!.goals.final)")
                         .font(.title2)
-                        .fontWeight((game.winner == game.away) ? .bold : .regular)
-                        .foregroundColor((game.winner == game.away && game.result == .win) ? .teal : .primary)
+                        .foregroundColor(game.home.isPiedSniper ? piedSniperTextColor : opponentTextColor)
 
                 }
                 .multilineTextAlignment(.leading)
@@ -66,6 +64,18 @@ struct CompletedGameCell: View {
                 Spacer()
             }
         }
+    }
+
+    var dateTextColor: Color {
+        game.result == .win() ? .teal : .secondary
+    }
+
+    var piedSniperTextColor: Color {
+        game.result == .loss() ? .secondary : .primary
+    }
+
+    var opponentTextColor: Color {
+        (game.result == .loss() || game.result == .tie) ? .primary : .secondary
     }
 }
 

@@ -7,7 +7,82 @@
 
 import Foundation
 
-struct TeamRecord {
+struct Team: Identifiable, Equatable {
+    let id: Int = Int.random(in: 1..<500)
+    let name: String
+    var record: TeamRecord?
+    var result: TeamResult?
+    var players = [Int : Player]()
+
+    static func == (lhs: Team, rhs: Team) -> Bool {
+        return true &&
+        lhs.name == rhs.name &&
+        lhs.record == rhs.record &&
+        lhs.result == rhs.result
+    }
+}
+
+// MARK: - Helpers
+
+extension Team {
+    static let piedSniperName = "Pied Sniper"
+    var isPiedSniper: Bool {
+        name == Team.piedSniperName
+    }
+
+    func player(number: Int?) -> Player? {
+        guard let number = number else { return nil }
+        return players[number]
+    }
+
+    var abbreviation: String {
+        String(name.uppercased().prefix(3))
+    }
+}
+
+struct TeamResult: Equatable {
+    struct Goals: Equatable {
+        var first: Int = 0
+        var second: Int = 0
+        var third: Int = 0
+        var overtime: String? = nil
+        var shootout: String? = nil
+        var final: Int = 0
+
+        func shootoutDescription(otl: Bool) -> AttributedString? {
+            guard let shootout = shootout else {
+                return AttributedString(stringLiteral: otl ? "0" : "1")
+            }
+
+            let shootoutStr = "(\(shootout))"
+            var attrStr = AttributedString(stringLiteral: "\(otl ? 0 : 1) \(shootoutStr)")
+
+            if let range = attrStr.range(of: shootoutStr) {
+                attrStr[range].foregroundColor = .secondary
+                attrStr[range].font = .caption2
+            }
+
+            return attrStr
+        }
+    }
+
+    struct Shots: Equatable {
+        var first: Int = 0
+        var second: Int = 0
+        var third: Int = 0
+        var total: Int = 0
+
+        var all: [Int] {
+            return [first, second, third, total]
+        }
+    }
+
+    var goals = Goals()
+    var shots = Shots()
+    var otl: Bool = false
+}
+
+struct TeamRecord: Equatable {
     var wins: Int = 0
     var losses: Int = 0
     var overtime: Int = 0
@@ -24,19 +99,21 @@ struct TeamRecord {
 
     mutating func update(for game: Game) {
         // Don't include preseason games in record and standings
-        guard game.type != .preseason else {
+        guard game.category != .preseason else {
             return
         }
 
         switch game.result {
-        case .win:
+        case .win(_):
             wins += 1
-        case .loss:
-            losses += 1
+        case .loss(overtime: let wentToOT):
+            if wentToOT {
+                overtime += 1
+            } else {
+                losses += 1
+            }
         case .tie:
-            fallthrough
-        case .overtime:
-            overtime += 1
+            break
         case .upcoming:
             break
         }
@@ -51,31 +128,22 @@ struct TeamRecord {
     }
 }
 
-struct Team: Identifiable, Equatable {
-    static let piedSniper = "Pied Sniper"
-
-    let id: Int = Int.random(in: 1..<500)
-    let name: String
-    var score: String = "0"
-    var record: TeamRecord?
-
-    static func == (lhs: Team, rhs: Team) -> Bool {
-        return true &&
-        lhs.name == rhs.name &&
-        lhs.score == rhs.score
-    }
-}
-
-// MARK: - Teams
+// MARK: - Team Helpers for Previews
 
 extension Team {
-    static let piedSniperTeam = Team(
-        name: "Pied Sniper",
-        record: TeamRecord(wins: 4, losses: 6, overtime: 2, rank: 4)
-    )
+    static func piedSniper(result: TeamResult? = nil) -> Team {
+        return Team(
+            name: Team.piedSniperName,
+            record: TeamRecord(wins: 4, losses: 6, overtime: 2, rank: 4),
+            result: result
+        )
+    }
 
-    static let doubleSecretProbation = Team(
-        name: "Double Secret Probation",
-        record: TeamRecord(wins: 8, losses: 3, overtime: 1, rank: 1)
-    )
+    static func doubleSecretProbation(result: TeamResult? = nil) -> Team {
+        return Team(
+            name: "Double Secret Probation",
+            record: TeamRecord(wins: 8, losses: 3, overtime: 1, rank: 1),
+            result: result
+        )
+    }
 }

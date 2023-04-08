@@ -21,7 +21,6 @@ struct StandingsCell: View {
 
                 Text(team.name)
                     .font(.headline)
-                    .gridColumnAlignment(.leading)
 
                 Group {
                     Text("\(record.gamesPlayed)")
@@ -38,6 +37,7 @@ struct StandingsCell: View {
                 Text("\(record.points)")
                     .font(.subheadline)
             }
+            .padding(.trailing)
         }
     }
 }
@@ -45,7 +45,7 @@ struct StandingsCell: View {
 struct StandingsCell_Previews: PreviewProvider {
     static var previews: some View {
         Grid {
-            StandingsCell(team: Team.piedSniperTeam)
+            StandingsCell(team: Team.piedSniper())
         }
         .previewLayout(.sizeThatFits)
     }

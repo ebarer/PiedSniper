@@ -42,7 +42,7 @@ struct ScheduleStatus {
 
         // Otherwise only try to sync once/day (orderedSame | orderedAscending)
         let syncedToday = Calendar.current.compare(lastSyncDate, to: presentDate, toGranularity: .day) != .orderedDescending
-        ScheduleStatus.logger.log("No upcoming game today, syncedToday? \(syncedToday)")
+        ScheduleStatus.logger.log("No upcoming game today, wantsReload? \(!syncedToday)")
         return !syncedToday
     }
 

@@ -7,106 +7,135 @@
 
 import Foundation
 
-struct Game {
-    enum GameType {
-        case undefined
-        case preseason
-        case regularSeason
-        case playoffs
+struct Game: Identifiable, CustomStringConvertible {
+    enum Category: String {
+        case preseason = "Preseason"
+        case regularSeason = "Regular Season"
+        case playoffs = "Playoffs"
     }
 
-    enum GameResult {
+    enum Result: Equatable {
         case upcoming
-        case win
+        case win(overtime: Bool = false)
         case tie
-        case loss
-        case overtime
+        case loss(overtime: Bool = false)
     }
 
     let id: Int
     let date: Date
-    var type: GameType? = .undefined
+    var category: Category? = .regularSeason
     let rink: String
-    var away: Team
-    var home: Team
     var lockerRoom: String?
 
-    var isHome: Bool {
-        home.name == Team.piedSniper
-    }
+    var away: Team
+    var home: Team
 
-    var opponent: Team {
-        home.name != Team.piedSniper ? home : away
-    }
+    var events: [GameEventType: [any GameEvent]]? = nil
 
-    var winner: Team? {
-        guard
-            let homeScore = Int(home.score.trimmingCharacters(in: .decimalDigits.inverted)),
-            let awayScore = Int(away.score.trimmingCharacters(in: .decimalDigits.inverted))
-        else {
-            return nil
-        }
-
-        // If the score is the same, there's no winner
-        guard homeScore != awayScore else { return nil }
-
-        return homeScore > awayScore ? home : away
-    }
-
-    var result: GameResult {
+    var result: Game.Result {
         let gameCompleted = date.compare(Date()) == .orderedAscending
-        guard gameCompleted else { return .upcoming }
+        guard gameCompleted else {
+            return .upcoming
+        }
 
         // If the game is complete and there's no winner, it's a tie
-        guard let winner = winner else { return .tie }
-
-        let result: GameResult = (winner.name == Team.piedSniper) ? .win : .loss
-
-        if result == .loss {
-            // TODO: If it's a loss, check if it was an OTL
+        guard let winner = winner else {
+            return .tie
         }
 
-        return result
+        return winner.isPiedSniper ? .win(overtime: wentToOT) : .loss(overtime: wentToOT)
     }
 
-    var debug: String {
-        return "\(id) : \(type ?? .undefined)(\(date)) = \(result) -> \(home.name) \(home.score) - \(away.name) \(away.score)"
+    var wentToOT: Bool {
+        if let homeOTL = home.result?.otl, homeOTL {
+            return true
+        }
+
+        if let awayOTL = away.result?.otl, awayOTL {
+            return true
+        }
+
+        return false
+    }
+
+    var description: String {
+        return "\(id) : \(category?.rawValue ?? "")(\(date.dateString)) = \(result) -> \(home.name) \(home.result?.goals.final ?? 0) - \(away.name) \(away.result?.goals.final ?? 0)"
     }
 }
 
-// MARK: Helpers for Previews
+// MARK: - Team Identifiers
+
+extension Game {
+    // Collection of both team results in the match
+    var teams: [Team] {
+        [away, home]
+    }
+
+    /// The opposition team (not Pied Sniper)
+    var opponent: Team {
+        home.isPiedSniper ? home : away
+    }
+
+    /// The team that won the game.
+    var winner: Team? {
+        // If the score is the same, there's no winner
+        guard let homeScore = home.result?.goals.final,
+              let awayScore = away.result?.goals.final,
+              homeScore != awayScore
+        else { return nil }
+        return homeScore > awayScore ? home : away
+    }
+
+    /// The team that lost the game.
+    var loser: Team? {
+        // If the score is the same, there's no loser
+        guard let homeScore = home.result?.goals.final,
+              let awayScore = away.result?.goals.final,
+              homeScore != awayScore
+        else { return nil }
+        return homeScore < awayScore ? home : away
+    }
+
+    /// Indicates if Pied Sniper was the home team.
+    var isHome: Bool {
+        home.isPiedSniper
+    }
+}
+
+
+// MARK: - Game Helpers for Previews
 
 extension Game {
     static let previewToday = Game(
-        id: 365624,
+        id: 380624,
         date: Calendar.current.date(byAdding: .minute, value: 10, to: Date()) ?? Date(),
         rink: "Black (E)",
-        away: Team(name: "Double Secret Probation"),
-        home: Team(name: Team.piedSniper),
-        lockerRoom: "B2"
+        lockerRoom: "B2",
+        away: Team.doubleSecretProbation(),
+        home: Team.piedSniper()
     )
 
     static let previewUpcoming = Game(
         id: 12456,
         date: Calendar.current.date(byAdding: .day, value: 10, to: Date()) ?? Date(),
         rink: "Black (E)",
-        away: Team(name: "Double Secret Probation"),
-        home: Team(name: Team.piedSniper)
+        away: Team.piedSniper(),
+        home: Team.doubleSecretProbation()
     )
 
     static let previewCompletedWin = Game(
         id: 12456,
         date: Calendar.current.date(byAdding: .day, value: -10, to: Date()) ?? Date(),
         rink: "Black (E)",
-        away: Team(name: "Double Secret Probation", score: "1"),
-        home: Team(name: Team.piedSniper, score: "10")
+        away: Team.doubleSecretProbation(result: TeamResult(goals: TeamResult.Goals(final: 1))),
+        home: Team.piedSniper(result: TeamResult(goals: TeamResult.Goals(final: 10)))
     )
 
     static let previewCompletedLoss = Game(
         id: 12456,
         date: Calendar.current.date(byAdding: .day, value: -5, to: Date()) ?? Date(),
         rink: "Black (E)",
-        away: Team(name: "Double Secret Probation", score: "3"),
-        home: Team(name: Team.piedSniper, score: "2")
+        away: Team.doubleSecretProbation(result: TeamResult(goals: TeamResult.Goals(final: 3))),
+        home: Team.piedSniper(result: TeamResult(goals: TeamResult.Goals(final: 2)))
     )
 }

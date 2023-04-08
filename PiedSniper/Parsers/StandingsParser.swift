@@ -8,20 +8,31 @@
 import Foundation
 
 struct StandingsParser {
-    let standingsURL = URL(string: "https://stats.sharksice.timetoscore.com/display-stats.php?league=1")
-
-    // Singleton
     static let shared = StandingsParser()
+    static let cache: NSCache<NSString, CacheEntryObject<String>> = NSCache()
 
     /// Load the standings for Adult Division 4A.
     /// - Parameter preview: Indicate if preview data should be used instead of loading live results.
     /// - Returns: Returns the Adult Division 4A standings.
     func loadStandings(preview: Bool = false) async -> [Team] {
-        let scrapedData = preview ? Bundle.main.load(file: "testStandings") : await standingsURL?.scrape()
+        let scrapedData = await scrapeStandings(preview: preview)
         guard let data = sanitize(standingsData: scrapedData) else { return [] }
-
         let teams = parse(standingsData: data)
         return teams
+    }
+
+    /// Scrape standings data from specified source.
+    /// - Parameter preview: Indicate if preview data should be used instead of loading live results.
+    /// - Returns: Return the scraped standings data.
+    private func scrapeStandings(preview: Bool) async -> String? {
+        if preview {
+            let scrapedData = Bundle.main.load(file: "testStandings")
+            return scrapedData
+        }
+
+        let standingsURL = URL(string: "https://stats.sharksice.timetoscore.com/display-stats.php?league=1")
+        let scrapedData = await standingsURL?.scrape(cache: StandingsParser.cache)
+        return scrapedData
     }
 }
 
@@ -52,7 +63,7 @@ extension StandingsParser {
         return separatedData
     }
 
-    /// Extra team and record information from the sanitized data.
+    /// Extract team and record information from the sanitized data.
     /// - Parameter standingsData: Sanitized data processed from the standings page.
     /// - Returns: Returns a list of teams with their repective records.
     private func parse(standingsData: [String]) -> [Team] {

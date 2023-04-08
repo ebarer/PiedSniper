@@ -15,19 +15,7 @@ struct UpcomingGameCell: View {
     var body: some View {
         if sizeCategory <= ContentSizeCategory.extraLarge {
             HStack {
-                VStack(alignment: .leading, spacing: 5) {
-                    Text(game.away.name)
-                        .font(.title2)
-                        .multilineTextAlignment(.leading)
-
-                    Text("at \(game.home.name)")
-                        .font(.title2)
-                        .multilineTextAlignment(.leading)
-                }
-
-                Spacer()
-
-                VStack(alignment: .trailing) {
+                VStack(alignment: .leading) {
                     Text(game.date.dayString)
                         .font(.headline)
                         .multilineTextAlignment(.trailing)
@@ -39,6 +27,18 @@ struct UpcomingGameCell: View {
                         .font(.headline)
                         .multilineTextAlignment(.trailing)
                         .foregroundColor(.teal)
+                }
+
+                Spacer()
+
+                VStack(alignment: .trailing, spacing: 5) {
+                    Text(game.away.name)
+                        .font(.title2)
+                        .multilineTextAlignment(.leading)
+
+                    Text("at \(game.home.name)")
+                        .font(.title2)
+                        .multilineTextAlignment(.leading)
                 }
             }
         } else {

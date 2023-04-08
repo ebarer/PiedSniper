@@ -8,65 +8,62 @@
 import SwiftUI
 
 struct Standings: View {
+    @Environment(\.sizeCategory) var sizeCategory
+
     @State private var teams = [Team]()
+
+    let insets = EdgeInsets(top: 20, leading: 20, bottom: 0, trailing: 0)
+
+    var headers: [HeaderCell] {
+        var headers = [
+            HeaderCell(title: ""),
+            HeaderCell(title: "Team", alignment: .leading),
+            HeaderCell(title: "GP"),
+            HeaderCell(title: "W")
+        ]
+
+        if sizeCategory <= ContentSizeCategory.extraExtraLarge {
+            headers.append(contentsOf: [
+                HeaderCell(title: "L"),
+                HeaderCell(title: "OT")
+            ])
+        }
+
+        headers.append(HeaderCell(title: "P"))
+        return headers
+    }
 
     var body: some View {
         NavigationStack {
-            ScrollView {
-                if !teams.isEmpty {
-                    Grid(horizontalSpacing: 0, verticalSpacing: 15) {
-                        StandingsHeader()
+            Group {
+                if teams.isEmpty {
+                    ProgressView()
+                        .tint(.teal)
+                } else {
+                    ScrollView {
+                        Grid(horizontalSpacing: 0, verticalSpacing: 15) {
+                            TableHeader(headers: headers)
 
-                        ForEach(teams) { team in
-                            StandingsCell(team: team)
-                                .padding(.trailing)
-
-                            Divider()
+                            ForEach(teams) { team in
+                                StandingsCell(team: team)
+                                Divider()
+                            }
                         }
+                        .padding(insets)
                     }
-                    .padding(
-                        EdgeInsets(
-                            top: 20,
-                            leading: 20,
-                            bottom: 0,
-                            trailing: 0
-                        )
-                    )
                 }
             }
             .navigationTitle("Standings")
         }
-        .task {
-            if teams.isEmpty {
-                teams = await StandingsParser.shared.loadStandings()
-            }
-        }
+        .task { await reload() }
     }
 }
 
-struct StandingsHeader: View {
-    @Environment(\.sizeCategory) var sizeCategory
-
-    var body: some View {
-        GridRow {
-            Text("")
-            Text("Team")
-                .gridColumnAlignment(.leading)
-            Text("G")
-            Text("W")
-
-            if sizeCategory <= ContentSizeCategory.extraExtraLarge {
-                Text("L")
-                Text("OT")
-            }
-
-            Text("P")
+extension Standings {
+    func reload() async {
+        if teams.isEmpty {
+            teams = await StandingsParser.shared.loadStandings()
         }
-        .font(.subheadline.smallCaps().bold())
-        .foregroundColor(.secondary)
-        .padding(.trailing)
-
-        Divider()
     }
 }
 

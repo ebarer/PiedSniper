@@ -8,10 +8,6 @@
 import Foundation
 
 struct ScheduleParser {
-    let piedSniperURL = URL(string: "https://stats.sharksice.timetoscore.com/display-schedule?team=4638")
-    let todaysGamesURL = URL(string: "https://stats.sharksice.timetoscore.com/display-lr-assignments")
-
-    // Singleton
     static let shared = ScheduleParser()
 
     /// Load the schedule for Pied Snipers.
@@ -22,7 +18,7 @@ struct ScheduleParser {
     func loadSchedule(status: inout ScheduleStatus, record: inout TeamRecord) async -> (today: Game?, upcoming: [Game], completed: [Game]) {
         var result: (today: Game?, upcoming: [Game], completed: [Game]) = (nil, [], [])
 
-        let scrapedData = status.preview ? Bundle.main.load(file: "testSchedule") : await piedSniperURL?.scrape()
+        let scrapedData = await scrapeSchedule(preview: status.preview)
         guard let data = sanitize(gamesData: scrapedData) else {
             status.gamesLoaded = 0
             status.lastSyncDate = Date()
@@ -32,15 +28,13 @@ struct ScheduleParser {
 
         let games = parse(gamesData: data)
         games.forEach { game in
-//            print(game.debug)
-
             if game.date.isToday {
                 result.today = game
             } else if game.result == .upcoming {
                 result.upcoming.append(game)
             } else {
                 record.update(for: game)
-                result.completed.append(game)
+                result.completed.insert(game, at: 0)
             }
         }        
 
@@ -57,7 +51,21 @@ struct ScheduleParser {
         status.lastSyncDate = Date()
         status.completed = true
         return result
-    }    
+    }
+
+    /// Scrape schedule data from specified source.
+    /// - Parameter preview: Indicate if preview data should be used instead of loading live results.
+    /// - Returns: Return the scraped schedule data.
+    private func scrapeSchedule(preview: Bool) async -> String? {
+        if preview {
+            let scrapedData = Bundle.main.load(file: "testSchedule")
+            return scrapedData
+        }
+
+        let piedSniperURL = URL(string: "https://stats.sharksice.timetoscore.com/display-schedule?team=4638")
+        let scrapedData = await piedSniperURL?.scrape()
+        return scrapedData
+    }
 }
 
 // MARK: - Game Parser
@@ -97,12 +105,11 @@ extension ScheduleParser {
 
         for gameData in gamesData {
             let sanitizedGameData = gameData.components(separatedBy: "&").map { $0.trimmingCharacters(in: .whitespaces) }
-//            print(sanitizedGameData)
 
             // There are 11 fields that are used from the schedule page
             guard sanitizedGameData.count >= 11 else { continue }
 
-            let gameID = Int(sanitizedGameData[1].replacingOccurrences(of: "*", with: "")) ?? 0
+            let gameID = Int(sanitizedGameData[1].replacingOccurrences(of: "*", with: "")) ?? -1
 
             let year = Calendar.current.component(.year, from: Date())
             let dateString = "\(sanitizedGameData[2]) \(year) \(sanitizedGameData[3])"
@@ -119,24 +126,61 @@ extension ScheduleParser {
                 rink = String(rink[upperBound...])
             }
 
-            var type: Game.GameType
+            var category: Game.Category?
             let gameTypeIndex = completed ? 11 : 9
             switch sanitizedGameData[gameTypeIndex] {
             case "Preseason":
-                type = .preseason
-            case let s where s.isRegularSeason:
-                type = .regularSeason
+                category = .preseason
+            case let typeString where typeString.isRegularSeason:
+                category = .regularSeason
+            case "Playoff":
+                category = .playoffs
             default:
-                type = .undefined
+                category = nil
+            }
+
+            var awayTeam = Team(name: sanitizedGameData[7])
+            var homeTeam = Team(name: completed ? sanitizedGameData[9] : sanitizedGameData[8])
+
+            var awayScore = 0
+            var awayOTL = false
+
+            var homeScore = 0
+            var homeOTL = false
+
+            // If the game is completed, parse the home and away team results
+            if completed {
+                var awayScoreString = sanitizedGameData[8]
+                // Overtime losses have "S" appended to the end, look for it and remove it
+                if awayScoreString.last == "S" {
+                    awayOTL = true
+                    awayScoreString = String(awayScoreString.dropLast(2))
+                }
+                awayScore = Int(awayScoreString) ?? -1
+
+                var homeScoreString = sanitizedGameData[10]
+                if homeScoreString.last == "S" {
+                    homeOTL = true
+                    homeScoreString = String(homeScoreString.dropLast(2))
+                }
+                homeScore = Int(homeScoreString) ?? -1
+
+                if awayScore == homeScore {
+                    awayOTL = true
+                    homeOTL = true
+                }
+
+                awayTeam.result = TeamResult(goals: TeamResult.Goals(final: awayScore), otl: awayOTL)
+                homeTeam.result = TeamResult(goals: TeamResult.Goals(final: homeScore), otl: homeOTL)
             }
 
             let game = Game(
                 id: gameID,
                 date: date,
-                type: type,
+                category: category,
                 rink: rink,
-                away: Team(name: sanitizedGameData[7], score: completed ? sanitizedGameData[8] : "0"),
-                home: Team(name: completed ? sanitizedGameData[9] : sanitizedGameData[8], score: completed ? sanitizedGameData[10] : "0")
+                away: awayTeam,
+                home: homeTeam
             )
 
             games.append(game)
@@ -151,10 +195,14 @@ extension ScheduleParser {
     ///   - preview: Indicate if preview data should be used instead of loading live results.
     /// - Returns: Returns the Pied Sniper locker room.
     private func fetchLockerRoom(for game: Game?, preview: Bool) async -> String? {
-        let scrapedData = preview ? Bundle.main.load(file: "testLockerRooms") : await todaysGamesURL?.scrape()
-        guard let data = sanitize(gamesData: scrapedData),
-              let game = game
-        else { return nil }
+        if preview {
+            let scrapedData = Bundle.main.load(file: "testLockerRooms")
+            return scrapedData
+        }
+
+        let todaysGamesURL = URL(string: "https://stats.sharksice.timetoscore.com/display-lr-assignments")
+        let scrapedData = await todaysGamesURL?.scrape()
+        guard let data = sanitize(gamesData: scrapedData), let game = game else { return nil }
 
         // This could probably be more efficient by just filtering for the row with the matching ID at the top, instead of iterating each game.
         // However, given the data set is minimal (< 10 games) that's likely a premature optimization.
@@ -164,7 +212,7 @@ extension ScheduleParser {
             // There are 9 fields that are used from the upcoming games page
             guard sanitizedGameData.count >= 9 else { continue }
 
-            let id = Int(sanitizedGameData[1].replacingOccurrences(of: "*", with: "")) ?? 0
+            let id = Int(sanitizedGameData[1].replacingOccurrences(of: "*", with: "")) ?? -1
             if game.id == id {
                 let lockerRoom = game.isHome ? sanitizedGameData[7] : sanitizedGameData[9]
                 return lockerRoom

@@ -22,7 +22,7 @@ struct Schedule: View {
             Group {
                 if !status.completed {
                     ProgressView()
-                        .progressViewStyle(CircularProgressViewStyle(tint: .teal))
+                        .tint(.teal)
                 } else if status.gamesLoaded == 0 {
                     Button {
                         Task { await reload(force: true) }
@@ -41,42 +41,30 @@ struct Schedule: View {
                             .headerProminence(.increased)
                         }
 
-                        if !upcomingGames.isEmpty {
-                            Section("Upcoming") {
-                                ForEach(upcomingGames, id: \.id) { game in
-                                    GameCell(game: game)
-                                }
+                        Section {
+                            ForEach(upcomingGames, id: \.id) { game in
+                                GameCell(game: game)
                             }
+                        } header: {
+                            Text(upcomingGames.isEmpty ? "No upcoming games" : "Upcoming")
                         }
 
                         if !completedGames.isEmpty {
                             Section {
                                 ForEach(completedGames, id: \.id) { game in
                                     NavigationLink {
-                                        Text("")
+                                        Scoresheet(game: game)
                                     } label: {
                                         GameCell(game: game)
                                     }
                                 }
                             } header: {
-                                HStack {
-                                    Text("Record")
-                                    Spacer()
-
-                                    if sizeCategory <= ContentSizeCategory.extraLarge {
-                                        Text(teamRecord.description)
-                                    }
-                                }
+                                Text("Record (\(teamRecord.summary))")
                             } footer: {
                                 VStack(alignment: .leading, spacing: 10) {
                                     Text("Last Sync: \(status.lastSyncString)")
                                         .font(.footnote)
                                         .foregroundColor(.secondary)
-
-                                    Text("The Toronto Maple Leafs are definitely going to lose in the first round of the playoffs. No need to specify a year, it'll always be true.")
-                                        .font(.footnote)
-                                        .foregroundColor(.secondary)
-                                        .multilineTextAlignment(.leading)
                                 }
                             }
                         }
@@ -84,8 +72,9 @@ struct Schedule: View {
                     .listStyle(.plain)
                 }
             }
-            .navigationTitle(Team.piedSniper)
+            .navigationTitle(Team.piedSniperName)
         }
+        .tint(.primary)
         .refreshable { await reload(force: true) }
         .task { await reload() }
     }
