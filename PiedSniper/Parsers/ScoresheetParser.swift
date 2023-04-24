@@ -277,7 +277,7 @@ extension ScoresheetParser {
         case .scoring:
             return ScoringEvent(with: content, team: team)
         case .shootout:
-            return ShootoutEvent(with: content, team: team, game: &game)
+            return ShootoutEvent(with: content, team: team)
         case .penalties:
             return PenaltyEvent(with: content, team: team)
         default:

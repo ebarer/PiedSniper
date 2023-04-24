@@ -18,7 +18,16 @@ struct Scoresheet: View {
                     GoalsTable(game: game)
                     ShotsTable(game: game)
                     ScoringSummary(game: game)
-                    PlayersTable(game: game)
+
+                    if let shootout = game.events?[.shootout], !shootout.isEmpty {
+                        ShootoutSummary(game: game)
+                    }
+
+                    if let penalties = game.events?[.penalties], !penalties.isEmpty {
+                        PenaltySummary(game: game)
+                    }
+
+                    RosterTable(game: game)
                 } else {
                     ProgressView()
                         .padding(.top, 50)

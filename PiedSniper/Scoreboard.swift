@@ -12,23 +12,27 @@ struct Scoreboard: View {
 
     var body: some View {
         if let awayResult = game.away.result, let homeResult = game.home.result {
-            HStack {
-                VStack {
+            HStack(alignment: .bottom) {
+                VStack(alignment: .center) {
                     Text(game.away.name)
                         .font(.callout.smallCaps())
                         .fontWeight(.semibold)
                         .foregroundColor(.white)
+                        .multilineTextAlignment(.center)
+
                     Text("\(awayResult.goals.final)")
                         .font(.system(size: 70)).monospacedDigit().bold()
                         .foregroundColor(foregroundColor(for: game.away))
                 }
                 .frame(maxWidth: .infinity)
 
-                VStack {
+                VStack(alignment: .center) {
                     Text(game.home.name)
                         .font(.callout.smallCaps())
                         .fontWeight(.semibold)
                         .foregroundColor(.white)
+                        .multilineTextAlignment(.center)
+
                     Text("\(homeResult.goals.final)")
                         .font(.system(size: 70)).monospacedDigit().bold()
                         .foregroundColor(foregroundColor(for: game.home))

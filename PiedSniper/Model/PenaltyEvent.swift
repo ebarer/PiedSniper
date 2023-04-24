@@ -46,3 +46,13 @@ struct PenaltyEvent: GameEvent, Comparable {
         lhs.time < rhs.time
     }
 }
+
+extension PenaltyEvent {
+    var delinquentString: String {
+        guard let number = number, let player = team.player(number: number) else {
+            return Player.unknownName
+        }
+
+        return "\(player.nameString) (\(number))"
+    }
+}

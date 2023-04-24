@@ -170,8 +170,8 @@ extension ScheduleParser {
                     homeOTL = true
                 }
 
-                awayTeam.result = TeamResult(goals: TeamResult.Goals(final: awayScore), otl: awayOTL)
-                homeTeam.result = TeamResult(goals: TeamResult.Goals(final: homeScore), otl: homeOTL)
+                awayTeam.result = TeamResult(id: gameID, goals: TeamResult.Goals(final: awayScore), otl: awayOTL)
+                homeTeam.result = TeamResult(id: gameID, goals: TeamResult.Goals(final: homeScore), otl: homeOTL)
             }
 
             let game = Game(

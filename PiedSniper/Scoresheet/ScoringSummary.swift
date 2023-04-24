@@ -9,36 +9,36 @@ import SwiftUI
 
 struct ScoringSummary: View {
     @State var game: Game
-    @State var scoring = [ScoringEvent]()
 
     var body: some View {
         VStack(alignment: .leading) {
             Section {
                 ForEach(scoring, id: \.id) { goal in
-                    HStack {
-                        Text("\(goal.time.string) \(goal.goalType.rawValue) [\(goal.team.name)]")
-                        Spacer()
-                        Text(goal.description)
-                    }
-                    .monospacedDigit()
-
+                    ScoringCell(goal: goal, game: game)
                     Divider()
                 }
             } header: {
-                Text("Scoring Summary")
-                    .font(.headline)
+                Text("Scoring")
+                    .font(.subheadline.smallCaps().bold())
+                    .foregroundColor(.secondary)
+                Divider()
             }
         }
         .padding(.all)
-        .task { await reload() }
     }
 }
 
 extension ScoringSummary {
-    func reload() async {
-        guard let gameEvents = game.events else { return }
-        if let scoringEvents = gameEvents[.scoring] as? [ScoringEvent] {
-            scoring = scoringEvents.sorted()
+    var scoring: [ScoringEvent] {
+        guard let gameEvents = game.events else { return [] }
+        guard let scoringEvents = gameEvents[.scoring] as? [ScoringEvent] else { return [] }
+
+        var currentScore: (away: Int, home: Int) = (0, 0)
+        return scoringEvents.sorted().map { goal in
+            var goal = goal
+            (goal.team == game.away) ? (currentScore.away += 1) : (currentScore.home += 1)
+            goal.gameScore = currentScore
+            return goal
         }
     }
 }

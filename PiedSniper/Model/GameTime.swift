@@ -42,7 +42,7 @@ struct GameTime: Comparable {
     }
 
     var string: String {
-        let timeString = String(format: "%02d:%02d", minutes, seconds)
+        let timeString = String(format: "%d:%02d", minutes, seconds)
         return "\(periodString) / \(timeString)"
     }
 

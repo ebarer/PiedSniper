@@ -72,7 +72,6 @@ extension StandingsParser {
         var rank: Int = 1
         for data in standingsData {
             let sanitizedData = data.components(separatedBy: "&").map { $0.trimmingCharacters(in: .whitespaces) }
-            //            print(sanitizedData)
 
             // There are 11 fields that are used from the standings page
             guard sanitizedData.count >= 11,

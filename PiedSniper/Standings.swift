@@ -55,6 +55,7 @@ struct Standings: View {
             }
             .navigationTitle("Standings")
         }
+        .refreshable { await reload() }
         .task { await reload() }
     }
 }

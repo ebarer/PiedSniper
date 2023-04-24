@@ -60,7 +60,7 @@ struct Game: Identifiable, CustomStringConvertible {
 
     var description: String {
         return "\(id) : \(category?.rawValue ?? "")(\(date.dateString)) = \(result) -> \(home.name) \(home.result?.goals.final ?? 0) - \(away.name) \(away.result?.goals.final ?? 0)"
-    }
+    }    
 }
 
 // MARK: - Team Identifiers
@@ -102,7 +102,6 @@ extension Game {
     }
 }
 
-
 // MARK: - Game Helpers for Previews
 
 extension Game {
@@ -127,15 +126,15 @@ extension Game {
         id: 12456,
         date: Calendar.current.date(byAdding: .day, value: -10, to: Date()) ?? Date(),
         rink: "Black (E)",
-        away: Team.doubleSecretProbation(result: TeamResult(goals: TeamResult.Goals(final: 1))),
-        home: Team.piedSniper(result: TeamResult(goals: TeamResult.Goals(final: 10)))
+        away: Team.doubleSecretProbation(result: TeamResult(id: 123456, goals: TeamResult.Goals(final: 1))),
+        home: Team.piedSniper(result: TeamResult(id: 123456, goals: TeamResult.Goals(final: 10)))
     )
 
     static let previewCompletedLoss = Game(
         id: 12456,
         date: Calendar.current.date(byAdding: .day, value: -5, to: Date()) ?? Date(),
         rink: "Black (E)",
-        away: Team.doubleSecretProbation(result: TeamResult(goals: TeamResult.Goals(final: 3))),
-        home: Team.piedSniper(result: TeamResult(goals: TeamResult.Goals(final: 2)))
+        away: Team.doubleSecretProbation(result: TeamResult(id: 123456, goals: TeamResult.Goals(final: 3))),
+        home: Team.piedSniper(result: TeamResult(id: 123456, goals: TeamResult.Goals(final: 2)))
     )
 }

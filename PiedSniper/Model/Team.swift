@@ -15,21 +15,30 @@ struct Team: Identifiable, Equatable {
     var players = [Int : Player]()
 
     static func == (lhs: Team, rhs: Team) -> Bool {
-        return true &&
-        lhs.name == rhs.name &&
-        lhs.record == rhs.record &&
-        lhs.result == rhs.result
+        let sameName = lhs.name == rhs.name
+        let sameRecord = lhs.record == rhs.record
+        let sameResult = lhs.result?.id == rhs.result?.id
+        return sameName && sameRecord && sameResult
     }
 }
 
-// MARK: - Helpers
+// MARK: - Name Helpers
 
 extension Team {
     static let piedSniperName = "Pied Sniper"
+
     var isPiedSniper: Bool {
         name == Team.piedSniperName
     }
 
+    var abbreviation: String {
+        String(name.uppercased().prefix(3))
+    }
+}
+
+// MARK: - Roster Helpers
+
+extension Team {
     func player(number: Int?) -> Player? {
         guard let number = number else { return nil }
         return players[number]
@@ -40,13 +49,9 @@ extension Team {
         roster.sort(by: <)
         return roster
     }
-
-    var abbreviation: String {
-        String(name.uppercased().prefix(3))
-    }
 }
 
-struct TeamResult: Equatable {
+struct TeamResult: Identifiable, Equatable {
     struct Goals: Equatable {
         var first: Int = 0
         var second: Int = 0
@@ -83,6 +88,7 @@ struct TeamResult: Equatable {
         }
     }
 
+    var id: Int = 0
     var goals = Goals()
     var shots = Shots()
     var otl: Bool = false
