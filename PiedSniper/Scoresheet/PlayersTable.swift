@@ -12,9 +12,8 @@ struct PlayersTable: View {
 
     var body: some View {
         ForEach(game.teams) { team in
-            let players = Array(team.players.values) as [Player]
-            ForEach(players) { player in
-                Text("\(player.number) \(player.fullName) \(player.typeString)")
+            ForEach(team.roster) { player in
+                Text("\(player.number) \(player.fullName) \(player.type.description)")
             }
         }
     }

@@ -45,7 +45,6 @@
 		CEE755E929D106CC0043D782 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CEE755E829D106CC0043D782 /* Assets.xcassets */; };
 		CEE755ED29D106CC0043D782 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CEE755EC29D106CC0043D782 /* Preview Assets.xcassets */; };
 		CEE755F429D117CD0043D782 /* ScheduleParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEE755F329D117CD0043D782 /* ScheduleParser.swift */; };
-		CEE755F729D4334F0043D782 /* GameCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEE755F629D4334F0043D782 /* GameCell.swift */; };
 		CEE7560029D449F00043D782 /* Schedule.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEE755FF29D449F00043D782 /* Schedule.swift */; };
 		CEF71D3E29D83E5500C4779E /* Standings.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEF71D3D29D83E5500C4779E /* Standings.swift */; };
 /* End PBXBuildFile section */
@@ -93,7 +92,6 @@
 		CEE755EC29D106CC0043D782 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		CEE755F329D117CD0043D782 /* ScheduleParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ScheduleParser.swift; path = Parsers/ScheduleParser.swift; sourceTree = "<group>"; };
 		CEE755F529D429A70043D782 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		CEE755F629D4334F0043D782 /* GameCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameCell.swift; sourceTree = "<group>"; };
 		CEE755FF29D449F00043D782 /* Schedule.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Schedule.swift; sourceTree = "<group>"; };
 		CEF71D3D29D83E5500C4779E /* Standings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Standings.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -126,7 +124,6 @@
 			isa = PBXGroup;
 			children = (
 				CEE755FF29D449F00043D782 /* Schedule.swift */,
-				CEE755F629D4334F0043D782 /* GameCell.swift */,
 				CE27A41129D6B2C000B3A74E /* TodayGameCell.swift */,
 				CE898DA729D59C3C00DE8A76 /* UpcomingGameCell.swift */,
 				CE898DA529D59C1100DE8A76 /* CompletedGameCell.swift */,
@@ -154,7 +151,6 @@
 				CEC6AC3529F5F2330089E122 /* ScoringSummary.swift */,
 				CEC6AC2929F5CC410089E122 /* EventsList.swift */,
 				CEC6AC2529F5CBD70089E122 /* PlayersTable.swift */,
-				CEC6AC1629F5079F0089E122 /* DividedBackground.swift */,
 			);
 			name = Scoresheet;
 			sourceTree = "<group>";
@@ -195,6 +191,7 @@
 			isa = PBXGroup;
 			children = (
 				CEC6AC2C29F5CC9C0089E122 /* TableHeader.swift */,
+				CEC6AC1629F5079F0089E122 /* DividedBackground.swift */,
 			);
 			name = "View Helpers";
 			sourceTree = "<group>";
@@ -370,7 +367,6 @@
 				CE27A41229D6B2C000B3A74E /* TodayGameCell.swift in Sources */,
 				CEC6AC2629F5CBD70089E122 /* PlayersTable.swift in Sources */,
 				CEC6ABEE29F3ECF70089E122 /* Scoreboard.swift in Sources */,
-				CEE755F729D4334F0043D782 /* GameCell.swift in Sources */,
 				CEC6AC1C29F59F3D0089E122 /* CacheEntry.swift in Sources */,
 				CEC6AC3129F5F0970089E122 /* ShootoutEvent.swift in Sources */,
 				CEC6ABF329F4AD060089E122 /* GameTime.swift in Sources */,

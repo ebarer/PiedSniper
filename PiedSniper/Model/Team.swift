@@ -35,6 +35,12 @@ extension Team {
         return players[number]
     }
 
+    var roster: [Player] {
+        var roster = Array(players.values) as [Player]
+        roster.sort(by: <)
+        return roster
+    }
+
     var abbreviation: String {
         String(name.uppercased().prefix(3))
     }

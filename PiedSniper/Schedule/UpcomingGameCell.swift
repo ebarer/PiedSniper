@@ -41,6 +41,7 @@ struct UpcomingGameCell: View {
                         .multilineTextAlignment(.leading)
                 }
             }
+            .padding(10)
         } else {
             HStack {
                 VStack(alignment: .leading, spacing: 3) {
@@ -64,6 +65,7 @@ struct UpcomingGameCell: View {
 
                 Spacer()
             }
+            .padding(10)
         }
     }
 }

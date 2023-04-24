@@ -11,28 +11,31 @@ struct DividedBackground: View {
     var startColor: Color
     var endColor: Color
     var slantPercent: CGFloat
+    var offset: CGFloat = 0.0
 
     var body: some View {
         ZStack {
             startColor
             endColor
-                .mask(Parallelogram(slantPercent: slantPercent))
+                .mask(Parallelogram(slantPercent: slantPercent, offset: offset))
         }
     }
 }
 
 struct Parallelogram: Shape {
     @Clamp(0.0...1.0) var slantPercent: CGFloat = 0
+    var offset: CGFloat = 0.0
 
     func path(in rect: CGRect) -> Path {
-        let mid = rect.width * 0.5
-        let offset = rect.width * slantPercent * 0.5
+        let halfWidth = rect.width * 0.5
+        let slantAdjustment = halfWidth * slantPercent
+        let mid = halfWidth + offset
 
         return Path { p in
-            p.move(to: CGPoint(x: mid + offset, y: 0))
+            p.move(to: CGPoint(x: mid + slantAdjustment, y: 0))
             p.addLine(to: CGPoint(x: rect.width, y: 0))
             p.addLine(to: CGPoint(x: rect.width, y: rect.height))
-            p.addLine(to: CGPoint(x: mid - offset, y: rect.height))
+            p.addLine(to: CGPoint(x: mid - slantAdjustment, y: rect.height))
             p.closeSubpath()
         }
     }

@@ -36,14 +36,14 @@ struct Schedule: View {
                     List {
                         if let gameToday = gameToday {
                             Section("Game Today, \(Date.todayString)") {
-                                GameCell(game: gameToday)
+                                TodayGameCell(game: gameToday)
                             }
                             .headerProminence(.increased)
                         }
 
                         Section {
                             ForEach(upcomingGames, id: \.id) { game in
-                                GameCell(game: game)
+                                UpcomingGameCell(game: game)
                             }
                         } header: {
                             Text(upcomingGames.isEmpty ? "No upcoming games" : "Upcoming")
@@ -52,11 +52,7 @@ struct Schedule: View {
                         if !completedGames.isEmpty {
                             Section {
                                 ForEach(completedGames, id: \.id) { game in
-                                    NavigationLink {
-                                        Scoresheet(game: game)
-                                    } label: {
-                                        GameCell(game: game)
-                                    }
+                                    CompletedGameCell(game: game, destination: Scoresheet(game: game))
                                 }
                             } header: {
                                 Text("Record (\(teamRecord.summary))")

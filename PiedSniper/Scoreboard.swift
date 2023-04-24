@@ -16,6 +16,7 @@ struct Scoreboard: View {
                 VStack {
                     Text(game.away.name)
                         .font(.callout.smallCaps())
+                        .fontWeight(.semibold)
                         .foregroundColor(.white)
                     Text("\(awayResult.goals.final)")
                         .font(.system(size: 70)).monospacedDigit().bold()
@@ -26,6 +27,7 @@ struct Scoreboard: View {
                 VStack {
                     Text(game.home.name)
                         .font(.callout.smallCaps())
+                        .fontWeight(.semibold)
                         .foregroundColor(.white)
                     Text("\(homeResult.goals.final)")
                         .font(.system(size: 70)).monospacedDigit().bold()
@@ -38,8 +40,10 @@ struct Scoreboard: View {
                 DividedBackground(
                     startColor: awayBackgroundColor,
                     endColor: homeBackgroundColor,
-                    slantPercent: 0.2)
-                .edgesIgnoringSafeArea(.top)
+                    slantPercent: 0.2,
+                    offset: 20
+                )
+                .edgesIgnoringSafeArea([.top, .horizontal])
             }
         }
     }

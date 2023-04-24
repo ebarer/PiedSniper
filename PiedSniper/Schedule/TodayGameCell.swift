@@ -19,6 +19,7 @@ struct TodayGameCell: View {
 
             Text(game.isHome ? "Light Jersey" : "Dark Jersey")
         }
+        .padding(10)
     }
 }
 
