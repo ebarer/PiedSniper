@@ -16,7 +16,7 @@ struct PenaltyCell: View {
             VStack(alignment: .center, spacing: 0) {
                 Text(penalty.time.string)
                     .font(.caption)
-                    .foregroundColor(.white)
+                    .foregroundColor(.primary).colorInvert()
                     .padding(EdgeInsets(top: 2, leading: 5, bottom: 2, trailing: 5))
                     .background {
                         RoundedRectangle(cornerRadius: 5, style: .continuous)

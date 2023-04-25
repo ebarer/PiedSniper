@@ -1,11 +1,12 @@
 # Todo
 
-[] Finish scoresheet
-[] Cache network requests (https://developer.apple.com/tutorials/app-dev-training/caching-network-data)
-[] Create a widget (https://developer.apple.com/documentation/widgetkit/creating-a-widget-extension)
-[] Scrape playoff table
-[] Rethink schedule styling
-[] Integrate other leagues
+[x] Finish scoresheet
+[ ] Cache network requests (https://developer.apple.com/tutorials/app-dev-training/caching-network-data)
+[ ] Create a widget (https://developer.apple.com/documentation/widgetkit/creating-a-widget-extension)
+[ ] Scrape playoff table
+[ ] Rethink schedule styling
+[ ] Integrate other leagues
+[ ] Add game check-in
 
 # Important Links
 League Standings - https://stats.sharksice.timetoscore.com/display-stats.php

@@ -27,7 +27,7 @@ extension TodayGameCell {
     var summaryString: AttributedString {
         var rinkString = "\(game.rink)"
         if let lockerRoom = game.lockerRoom {
-            rinkString.append(" \(lockerRoom)")
+            rinkString.append(" • \(lockerRoom)")
         }
 
         let summaryString = "\(game.date.timeString) on \(rinkString)"

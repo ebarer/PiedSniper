@@ -14,6 +14,8 @@ struct Scoresheet: View {
     var body: some View {
         NavigationStack {
             ScrollView {
+                GameSummary(game: game)
+
                 if finishedLoading {
                     GoalsTable(game: game)
                     ShotsTable(game: game)
@@ -28,6 +30,7 @@ struct Scoresheet: View {
                     }
 
                     RosterTable(game: game)
+                        .padding(.bottom, 20)
                 } else {
                     ProgressView()
                         .padding(.top, 50)

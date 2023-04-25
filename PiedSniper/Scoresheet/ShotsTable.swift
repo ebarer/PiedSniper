@@ -51,7 +51,7 @@ struct ShotsTable: View {
 
                 Divider()
             }
-            .font(.footnote)
+            .font(.footnote.monospacedDigit())
             .padding(insets)
             .task {
                 headers = [

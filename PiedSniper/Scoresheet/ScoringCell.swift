@@ -19,7 +19,7 @@ struct ScoringCell: View {
                     .font(.caption)
                     .foregroundColor(.secondary)
                 Text(goal.gameScoreString(with: game))
-                    .foregroundColor(.white)
+                    .foregroundColor(.primary).colorInvert()
                     .padding(EdgeInsets(top: 2, leading: 5, bottom: 2, trailing: 5))
                     .background {
                         RoundedRectangle(cornerRadius: 5, style: .continuous)

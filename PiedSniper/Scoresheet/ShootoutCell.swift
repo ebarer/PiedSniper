@@ -1,5 +1,5 @@
 //
-//  ShootoutRoundCell.swift
+//  ShootoutCell.swift
 //  PiedSniper
 //
 //  Created by Elliot Barer on 4/25/23.
@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct ShootoutRoundCell: View {
+struct ShootoutCell: View {
     var round: Int
     var shots: [ShootoutEvent]?
 
@@ -21,6 +21,7 @@ struct ShootoutRoundCell: View {
 
                 Text("\(round)")
                     .font(.title2.bold())
+                    .foregroundColor(.secondary)
 
                 if shots.count > 1 {
                     ShootoutResultBadge(shot: shots[1], alignment: .center)
@@ -35,6 +36,8 @@ struct ShootoutRoundCell: View {
 }
 
 struct ShootoutResultBadge: View {
+    @Environment(\.colorScheme) var colorScheme
+
     var shot: ShootoutEvent
     var alignment: HorizontalAlignment
 
@@ -42,9 +45,9 @@ struct ShootoutResultBadge: View {
         Text(shot.result)
             .font(.caption.smallCaps())
             .fontWeight(shot.scored ? .bold : .regular)
-            .foregroundColor(foregroundColor)
+            .foregroundColor(textColor(for: colorScheme))
             .gridColumnAlignment(alignment)
-            .padding(EdgeInsets(top: 2, leading: 5, bottom: 2, trailing: 5))
+            .padding(EdgeInsets(top: 2, leading: 5, bottom: 3, trailing: 5))
             .background {
                 if shot.scored {
                     RoundedRectangle(cornerRadius: 5, style: .continuous)
@@ -69,12 +72,12 @@ struct ShootoutResultBadge: View {
         shot.scored ? .clear : teamColor
     }
 
-    var foregroundColor: Color {
-        shot.scored ? .white : teamColor
+    func textColor(for colorScheme: ColorScheme) -> Color {
+        return shot.scored ? (colorScheme == .dark ? .black : .white) : teamColor
     }
 }
 
-struct ShootoutRoundCell_Previews: PreviewProvider {
+struct ShootoutCell_Previews: PreviewProvider {
     static var previews: some View {
         let shots: [ShootoutEvent] = [
             ShootoutEvent(
@@ -88,7 +91,7 @@ struct ShootoutRoundCell_Previews: PreviewProvider {
         ]
 
         Grid {
-            ShootoutRoundCell(round: 1, shots: shots)
+            ShootoutCell(round: 1, shots: shots)
         }
     }
 }

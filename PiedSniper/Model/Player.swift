@@ -12,7 +12,6 @@ enum PlayerType: Int, Comparable, CustomStringConvertible {
     case captain = 2
     case assistantCaptain = 3
     case player = 4
-    case spare = 5
 
     init(symbol: String) {
         switch symbol {
@@ -22,8 +21,6 @@ enum PlayerType: Int, Comparable, CustomStringConvertible {
             self = .captain
         case "A":
             self = .assistantCaptain
-        case "S":
-            self = .spare
         default:
             self = .player
         }

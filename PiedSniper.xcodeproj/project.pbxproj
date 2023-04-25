@@ -42,8 +42,9 @@
 		CEC6AC3629F5F2330089E122 /* ScoringSummary.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEC6AC3529F5F2330089E122 /* ScoringSummary.swift */; };
 		CED4841029F77E4300F637E8 /* ScoringCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CED4840F29F77E4300F637E8 /* ScoringCell.swift */; };
 		CED4841229F7AB2900F637E8 /* ShootoutSummary.swift in Sources */ = {isa = PBXBuildFile; fileRef = CED4841129F7AB2900F637E8 /* ShootoutSummary.swift */; };
-		CED4841429F7B42E00F637E8 /* ShootoutRoundCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CED4841329F7B42E00F637E8 /* ShootoutRoundCell.swift */; };
+		CED4841429F7B42E00F637E8 /* ShootoutCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CED4841329F7B42E00F637E8 /* ShootoutCell.swift */; };
 		CED4841629F7C5A000F637E8 /* PenaltyCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CED4841529F7C5A000F637E8 /* PenaltyCell.swift */; };
+		CED4841829F7E35800F637E8 /* GameSummary.swift in Sources */ = {isa = PBXBuildFile; fileRef = CED4841729F7E35800F637E8 /* GameSummary.swift */; };
 		CEE2853E29DFFFEC0082F7DC /* Scoresheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEE2853D29DFFFEC0082F7DC /* Scoresheet.swift */; };
 		CEE755E529D106CB0043D782 /* PiedSniperApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEE755E429D106CB0043D782 /* PiedSniperApp.swift */; };
 		CEE755E929D106CC0043D782 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CEE755E829D106CC0043D782 /* Assets.xcassets */; };
@@ -90,8 +91,9 @@
 		CEC6AC3529F5F2330089E122 /* ScoringSummary.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ScoringSummary.swift; path = Scoresheet/ScoringSummary.swift; sourceTree = "<group>"; };
 		CED4840F29F77E4300F637E8 /* ScoringCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ScoringCell.swift; path = Scoresheet/ScoringCell.swift; sourceTree = "<group>"; };
 		CED4841129F7AB2900F637E8 /* ShootoutSummary.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ShootoutSummary.swift; path = Scoresheet/ShootoutSummary.swift; sourceTree = "<group>"; };
-		CED4841329F7B42E00F637E8 /* ShootoutRoundCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ShootoutRoundCell.swift; path = Scoresheet/ShootoutRoundCell.swift; sourceTree = "<group>"; };
+		CED4841329F7B42E00F637E8 /* ShootoutCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ShootoutCell.swift; path = Scoresheet/ShootoutCell.swift; sourceTree = "<group>"; };
 		CED4841529F7C5A000F637E8 /* PenaltyCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = PenaltyCell.swift; path = Scoresheet/PenaltyCell.swift; sourceTree = "<group>"; };
+		CED4841729F7E35800F637E8 /* GameSummary.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = GameSummary.swift; path = Scoresheet/GameSummary.swift; sourceTree = "<group>"; };
 		CEE2853D29DFFFEC0082F7DC /* Scoresheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Scoresheet.swift; sourceTree = "<group>"; };
 		CEE755E129D106CB0043D782 /* PiedSniper.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PiedSniper.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		CEE755E429D106CB0043D782 /* PiedSniperApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PiedSniperApp.swift; sourceTree = "<group>"; };
@@ -154,12 +156,13 @@
 			children = (
 				CEE2853D29DFFFEC0082F7DC /* Scoresheet.swift */,
 				CEC6ABED29F3ECF70089E122 /* Scoreboard.swift */,
+				CED4841729F7E35800F637E8 /* GameSummary.swift */,
 				CEC6AC2729F5CC180089E122 /* GoalsTable.swift */,
 				CEC6AC2329F5CBC70089E122 /* ShotsTable.swift */,
 				CEC6AC3529F5F2330089E122 /* ScoringSummary.swift */,
 				CED4840F29F77E4300F637E8 /* ScoringCell.swift */,
 				CED4841129F7AB2900F637E8 /* ShootoutSummary.swift */,
-				CED4841329F7B42E00F637E8 /* ShootoutRoundCell.swift */,
+				CED4841329F7B42E00F637E8 /* ShootoutCell.swift */,
 				CEC6AC2929F5CC410089E122 /* PenaltySummary.swift */,
 				CED4841529F7C5A000F637E8 /* PenaltyCell.swift */,
 				CEC6AC2529F5CBD70089E122 /* RosterTable.swift */,
@@ -370,13 +373,14 @@
 				CE0F47E129E2B8DE000B4BD3 /* StandingsParser.swift in Sources */,
 				CEC6AC1529F5078A0089E122 /* Clamp.swift in Sources */,
 				CE0F47E329E2B946000B4BD3 /* SourceHelpers.swift in Sources */,
+				CED4841829F7E35800F637E8 /* GameSummary.swift in Sources */,
 				CEC6AC2429F5CBC70089E122 /* ShotsTable.swift in Sources */,
 				CEC6AC3429F5F0A80089E122 /* PenaltyEvent.swift in Sources */,
 				CEE7560029D449F00043D782 /* Schedule.swift in Sources */,
 				CED4841629F7C5A000F637E8 /* PenaltyCell.swift in Sources */,
 				CEC6AC1729F5079F0089E122 /* DividedBackground.swift in Sources */,
 				CE1DFF0129D98AB700181176 /* StandingsCell.swift in Sources */,
-				CED4841429F7B42E00F637E8 /* ShootoutRoundCell.swift in Sources */,
+				CED4841429F7B42E00F637E8 /* ShootoutCell.swift in Sources */,
 				CEE2853E29DFFFEC0082F7DC /* Scoresheet.swift in Sources */,
 				CED4841229F7AB2900F637E8 /* ShootoutSummary.swift in Sources */,
 				CEC6AC2029F5B7BB0089E122 /* String+Extension.swift in Sources */,

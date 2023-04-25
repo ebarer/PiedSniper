@@ -23,7 +23,7 @@ struct Game: Identifiable, CustomStringConvertible {
 
     let id: Int
     let date: Date
-    var category: Category? = .regularSeason
+    var category: Category = .regularSeason
     let rink: String
     var lockerRoom: String?
 
@@ -46,7 +46,7 @@ struct Game: Identifiable, CustomStringConvertible {
     }
 
     var description: String {
-        return "\(id) : \(category?.rawValue ?? "")(\(date.dateString)) = \(result) -> \(home.name) \(home.result?.goals.final ?? 0) - \(away.name) \(away.result?.goals.final ?? 0)"
+        return "\(id) : \(category.rawValue)(\(date.dateString)) = \(result) -> \(home.name) \(home.result?.goals.final ?? 0) - \(away.name) \(away.result?.goals.final ?? 0)"
     }    
 }
 
@@ -60,7 +60,7 @@ extension Game {
 
     /// The opposition team (not Pied Sniper)
     var opponent: Team {
-        home.isPiedSniper ? home : away
+        home.isPiedSniper ? away : home
     }
 
     /// The team that won the game.

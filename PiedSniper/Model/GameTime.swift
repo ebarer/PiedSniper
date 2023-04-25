@@ -43,7 +43,7 @@ struct GameTime: Comparable {
 
     var string: String {
         let timeString = String(format: "%d:%02d", minutes, seconds)
-        return "\(periodString) / \(timeString)"
+        return "\(periodString) • \(timeString)"
     }
 
     static func < (lhs: GameTime, rhs: GameTime) -> Bool {

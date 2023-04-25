@@ -15,7 +15,7 @@ struct ShootoutSummary: View {
             Section {
                 Grid {
                     ForEach(rounds, id: \.self) { round in
-                        ShootoutRoundCell(round: round, shots: shootout[round])
+                        ShootoutCell(round: round, shots: shootout[round])
                             .padding(.trailing)
                         Divider()
                     }

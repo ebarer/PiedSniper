@@ -20,7 +20,7 @@ extension Date {
 
     var dateString: String {
         let formatter = DateFormatter()
-        formatter.dateFormat = "E, MMM d, h:mm a"
+        formatter.dateFormat = "E, MMM d • h:mm a"
         return formatter.string(from: self)
     }
 

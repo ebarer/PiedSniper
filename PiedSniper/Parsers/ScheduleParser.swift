@@ -126,17 +126,15 @@ extension ScheduleParser {
                 rink = String(rink[upperBound...])
             }
 
-            var category: Game.Category?
+            var category: Game.Category
             let gameTypeIndex = completed ? 11 : 9
             switch sanitizedGameData[gameTypeIndex] {
             case "Preseason":
                 category = .preseason
-            case let typeString where typeString.isRegularSeason:
-                category = .regularSeason
             case "Playoff":
                 category = .playoffs
             default:
-                category = nil
+                category = .regularSeason
             }
 
             var awayTeam = Team(name: sanitizedGameData[7])
@@ -172,7 +170,7 @@ extension ScheduleParser {
                     result = .tie
                 } else if homeTeam.isPiedSniper {
                     result = homeScore > awayScore ? .win(overtime: wentToOT) : .loss(overtime: wentToOT)
-                } else {
+                } else if awayTeam.isPiedSniper {
                     result = awayScore > homeScore ? .win(overtime: wentToOT) : .loss(overtime: wentToOT)
                 }
             }
@@ -199,13 +197,14 @@ extension ScheduleParser {
     ///   - preview: Indicate if preview data should be used instead of loading live results.
     /// - Returns: Returns the Pied Sniper locker room.
     private func fetchLockerRoom(for game: Game?, preview: Bool) async -> String? {
+        var scrapedData: String?
         if preview {
-            let scrapedData = Bundle.main.load(file: "testLockerRooms")
-            return scrapedData
+            scrapedData = Bundle.main.load(file: "testLockerRooms")
+        } else {
+            let todaysGamesURL = URL(string: "https://stats.sharksice.timetoscore.com/display-lr-assignments")
+            scrapedData = await todaysGamesURL?.scrape()
         }
 
-        let todaysGamesURL = URL(string: "https://stats.sharksice.timetoscore.com/display-lr-assignments")
-        let scrapedData = await todaysGamesURL?.scrape()
         guard let data = sanitize(gamesData: scrapedData), let game = game else { return nil }
 
         // This could probably be more efficient by just filtering for the row with the matching ID at the top, instead of iterating each game.

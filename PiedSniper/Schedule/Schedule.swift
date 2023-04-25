@@ -35,7 +35,7 @@ struct Schedule: View {
                 } else {
                     List {
                         if let gameToday = gameToday {
-                            Section("Game Today, \(Date.todayString)") {
+                            Section("Game Today • \(Date.todayString)") {
                                 TodayGameCell(game: gameToday)
                             }
                             .headerProminence(.increased)
