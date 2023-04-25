@@ -60,13 +60,13 @@ struct TeamResult: Identifiable, Equatable {
         var shootout: String? = nil
         var final: Int = 0
 
-        func shootoutDescription(otl: Bool) -> AttributedString? {
+        func shootoutDescription(winner: Bool) -> AttributedString? {
             guard let shootout = shootout else {
-                return AttributedString(stringLiteral: otl ? "0" : "1")
+                return AttributedString(stringLiteral: winner ? "1" : "0")
             }
 
             let shootoutStr = "(\(shootout))"
-            var attrStr = AttributedString(stringLiteral: "\(otl ? 0 : 1) \(shootoutStr)")
+            var attrStr = AttributedString(stringLiteral: "\(winner ? 1 : 0) \(shootoutStr)")
 
             if let range = attrStr.range(of: shootoutStr) {
                 attrStr[range].foregroundColor = .secondary
@@ -91,7 +91,6 @@ struct TeamResult: Identifiable, Equatable {
     var id: Int = 0
     var goals = Goals()
     var shots = Shots()
-    var otl: Bool = false
 }
 
 struct TeamRecord: Equatable {

@@ -74,15 +74,32 @@ struct CompletedGameCell: View {
 
 extension CompletedGameCell {
     var dateTextColor: Color {
-        game.result == .win() ? .teal : .secondary
+        switch game.result {
+        case .win(overtime: _):
+            return .teal
+        default:
+            return .secondary
+        }
     }
 
     var piedSniperTextColor: Color {
-        game.result == .loss() ? .secondary : .primary
+        switch game.result {
+        case .loss(overtime: _):
+            return .secondary
+        default:
+            return .primary
+        }
     }
 
     var opponentTextColor: Color {
-        (game.result == .loss() || game.result == .tie) ? .primary : .secondary
+        switch game.result {
+        case .loss(overtime: _):
+            return .primary
+        case .tie:
+            return .primary
+        default:
+            return .secondary
+        }
     }
 }
 

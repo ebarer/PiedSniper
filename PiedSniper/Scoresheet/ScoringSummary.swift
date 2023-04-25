@@ -24,11 +24,15 @@ struct ScoringSummary: View {
                 Divider()
             }
         }
-        .padding(.all)
+        .padding(insets)
     }
 }
 
 extension ScoringSummary {
+    var insets: EdgeInsets {
+        EdgeInsets(top: 20, leading: 20, bottom: 0, trailing: 0)
+    }
+
     var scoring: [ScoringEvent] {
         guard let gameEvents = game.events else { return [] }
         guard let scoringEvents = gameEvents[.scoring] as? [ScoringEvent] else { return [] }

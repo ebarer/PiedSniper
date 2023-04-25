@@ -143,35 +143,38 @@ extension ScheduleParser {
             var homeTeam = Team(name: completed ? sanitizedGameData[9] : sanitizedGameData[8])
 
             var awayScore = 0
-            var awayOTL = false
-
             var homeScore = 0
-            var homeOTL = false
+            var wentToOT = false
+
+            var result: Game.Result = .upcoming
 
             // If the game is completed, parse the home and away team results
             if completed {
                 var awayScoreString = sanitizedGameData[8]
                 // Overtime losses have "S" appended to the end, look for it and remove it
                 if awayScoreString.last == "S" {
-                    awayOTL = true
+                    wentToOT = true
                     awayScoreString = String(awayScoreString.dropLast(2))
                 }
                 awayScore = Int(awayScoreString) ?? -1
 
                 var homeScoreString = sanitizedGameData[10]
                 if homeScoreString.last == "S" {
-                    homeOTL = true
+                    wentToOT = true
                     homeScoreString = String(homeScoreString.dropLast(2))
                 }
                 homeScore = Int(homeScoreString) ?? -1
 
-                if awayScore == homeScore {
-                    awayOTL = true
-                    homeOTL = true
-                }
+                awayTeam.result = TeamResult(id: gameID, goals: TeamResult.Goals(final: awayScore))
+                homeTeam.result = TeamResult(id: gameID, goals: TeamResult.Goals(final: homeScore))
 
-                awayTeam.result = TeamResult(id: gameID, goals: TeamResult.Goals(final: awayScore), otl: awayOTL)
-                homeTeam.result = TeamResult(id: gameID, goals: TeamResult.Goals(final: homeScore), otl: homeOTL)
+                if awayScore == homeScore {
+                    result = .tie
+                } else if homeTeam.isPiedSniper {
+                    result = homeScore > awayScore ? .win(overtime: wentToOT) : .loss(overtime: wentToOT)
+                } else {
+                    result = awayScore > homeScore ? .win(overtime: wentToOT) : .loss(overtime: wentToOT)
+                }
             }
 
             let game = Game(
@@ -180,7 +183,8 @@ extension ScheduleParser {
                 category: category,
                 rink: rink,
                 away: awayTeam,
-                home: homeTeam
+                home: homeTeam,
+                result: result
             )
 
             games.append(game)

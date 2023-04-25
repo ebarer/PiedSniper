@@ -1,4 +1,4 @@
-#  Todo
+# Todo
 
 [] Finish scoresheet
 [] Cache network requests (https://developer.apple.com/tutorials/app-dev-training/caching-network-data)

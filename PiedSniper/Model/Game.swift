@@ -30,32 +30,19 @@ struct Game: Identifiable, CustomStringConvertible {
     var away: Team
     var home: Team
 
+    var result: Game.Result
+
     var events: [GameEventType: [any GameEvent]]? = nil
 
-    var result: Game.Result {
-        let gameCompleted = date.compare(Date()) == .orderedAscending
-        guard gameCompleted else {
-            return .upcoming
-        }
-
-        // If the game is complete and there's no winner, it's a tie
-        guard let winner = winner else {
-            return .tie
-        }
-
-        return winner.isPiedSniper ? .win(overtime: wentToOT) : .loss(overtime: wentToOT)
-    }
-
     var wentToOT: Bool {
-        if let homeOTL = home.result?.otl, homeOTL {
-            return true
+        switch result {
+        case .win(overtime: let overtime):
+            return overtime
+        case .loss(overtime: let overtime):
+            return overtime
+        default:
+            return false
         }
-
-        if let awayOTL = away.result?.otl, awayOTL {
-            return true
-        }
-
-        return false
     }
 
     var description: String {
@@ -111,7 +98,8 @@ extension Game {
         rink: "Black (E)",
         lockerRoom: "B2",
         away: Team.doubleSecretProbation(),
-        home: Team.piedSniper()
+        home: Team.piedSniper(),
+        result: .upcoming
     )
 
     static let previewUpcoming = Game(
@@ -119,7 +107,8 @@ extension Game {
         date: Calendar.current.date(byAdding: .day, value: 10, to: Date()) ?? Date(),
         rink: "Black (E)",
         away: Team.piedSniper(),
-        home: Team.doubleSecretProbation()
+        home: Team.doubleSecretProbation(),
+        result: .upcoming
     )
 
     static let previewCompletedWin = Game(
@@ -127,7 +116,8 @@ extension Game {
         date: Calendar.current.date(byAdding: .day, value: -10, to: Date()) ?? Date(),
         rink: "Black (E)",
         away: Team.doubleSecretProbation(result: TeamResult(id: 123456, goals: TeamResult.Goals(final: 1))),
-        home: Team.piedSniper(result: TeamResult(id: 123456, goals: TeamResult.Goals(final: 10)))
+        home: Team.piedSniper(result: TeamResult(id: 123456, goals: TeamResult.Goals(final: 10))),
+        result: .win(overtime: false)
     )
 
     static let previewCompletedLoss = Game(
@@ -135,6 +125,7 @@ extension Game {
         date: Calendar.current.date(byAdding: .day, value: -5, to: Date()) ?? Date(),
         rink: "Black (E)",
         away: Team.doubleSecretProbation(result: TeamResult(id: 123456, goals: TeamResult.Goals(final: 3))),
-        home: Team.piedSniper(result: TeamResult(id: 123456, goals: TeamResult.Goals(final: 2)))
+        home: Team.piedSniper(result: TeamResult(id: 123456, goals: TeamResult.Goals(final: 2))),
+        result: .loss(overtime: false)
     )
 }

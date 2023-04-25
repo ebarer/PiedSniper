@@ -10,7 +10,6 @@ import SwiftUI
 struct GoalsTable: View {
     @State var game: Game
     @State var headers: [HeaderCell] = []
-    let insets = EdgeInsets(top: 20, leading: 20, bottom: 0, trailing: 0)
 
     var body: some View {
         Grid(horizontalSpacing: 0, verticalSpacing: 10) {
@@ -26,7 +25,7 @@ struct GoalsTable: View {
                         Text("\(result.goals.second)")
                         Text("\(result.goals.third)")
 
-                        if result.otl, let shootout = result.goals.shootoutDescription(otl: result.otl) {
+                        if game.wentToOT, let shootout = result.goals.shootoutDescription(winner: team == game.winner) {
                             Text(shootout)
                         }
 
@@ -60,6 +59,10 @@ struct GoalsTable: View {
 }
 
 extension GoalsTable {
+    var insets: EdgeInsets {
+        EdgeInsets(top: 20, leading: 20, bottom: 0, trailing: 0)
+    }
+
     func foregroundColor(for team: Team) -> Color {
         game.loser == team ? .secondary : .primary
     }

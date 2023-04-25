@@ -10,14 +10,11 @@ import SwiftUI
 struct RosterTable: View {
     @State var game: Game
 
-    var rosters: [(Player, Player)] {
-        Array(zip(game.away.roster, game.home.roster))
-    }
-
     var body: some View {
         ForEach(rosters, id:\.0.id) { p1, p2 in
             HStack {
                 Text(p1.nameString)
+                Spacer()
                 Text(p2.nameString)
             }
             //                VStack(alignment: .leading) {
@@ -28,6 +25,12 @@ struct RosterTable: View {
             //                    }
             //                }
         }
+    }
+}
+
+extension RosterTable {
+    var rosters: [(Player, Player)] {
+        Array(zip(game.away.roster, game.home.roster))
     }
 }
 
