@@ -16,6 +16,7 @@ struct ShootoutSummary: View {
                 Grid {
                     ForEach(rounds, id: \.self) { round in
                         ShootoutRoundCell(round: round, shots: shootout[round])
+                            .padding(.trailing)
                         Divider()
                     }
                 }
@@ -26,7 +27,7 @@ struct ShootoutSummary: View {
                 Divider()
             }
         }
-        .padding(.all)
+        .padding(insets)
     }
 }
 
@@ -46,6 +47,10 @@ extension ShootoutSummary {
 
     var rounds: [Int] {
         Array(shootout.keys.sorted())
+    }
+
+    var insets: EdgeInsets {
+        EdgeInsets(top: 20, leading: 20, bottom: 0, trailing: 0)
     }
 }
 

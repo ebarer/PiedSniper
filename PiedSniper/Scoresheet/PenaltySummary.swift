@@ -15,6 +15,7 @@ struct PenaltySummary: View {
             Section {
                 ForEach(penalties, id: \.id) { penalty in
                     PenaltyCell(penalty: penalty, game: game)
+                        .padding(.trailing)
                     Divider()
                 }
             } header: {
@@ -24,7 +25,7 @@ struct PenaltySummary: View {
                 Divider()
             }
         }
-        .padding(.all)
+        .padding(insets)
     }
 }
 
@@ -39,6 +40,10 @@ extension PenaltySummary {
         }
 
         return penaltyEvents.sorted()
+    }
+
+    var insets: EdgeInsets {
+        EdgeInsets(top: 20, leading: 20, bottom: 0, trailing: 0)
     }
 }
 

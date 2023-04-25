@@ -15,6 +15,7 @@ struct ScoringSummary: View {
             Section {
                 ForEach(scoring, id: \.id) { goal in
                     ScoringCell(goal: goal, game: game)
+                        .padding(.trailing)
                     Divider()
                 }
             } header: {
@@ -29,10 +30,6 @@ struct ScoringSummary: View {
 }
 
 extension ScoringSummary {
-    var insets: EdgeInsets {
-        EdgeInsets(top: 20, leading: 20, bottom: 0, trailing: 0)
-    }
-
     var scoring: [ScoringEvent] {
         guard let gameEvents = game.events else { return [] }
         guard let scoringEvents = gameEvents[.scoring] as? [ScoringEvent] else { return [] }
@@ -44,6 +41,10 @@ extension ScoringSummary {
             goal.gameScore = currentScore
             return goal
         }
+    }
+
+    var insets: EdgeInsets {
+        EdgeInsets(top: 20, leading: 20, bottom: 0, trailing: 0)
     }
 }
 
