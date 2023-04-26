@@ -30,9 +30,9 @@ extension Date {
         return formatter.string(from: self)
     }
 
-    var verticalDayString: String {
+    var completedDayString: String {
         let formatter = DateFormatter()
-        formatter.dateFormat = "MMM\nd"
+        formatter.dateFormat = "MMM d"
         return formatter.string(from: self)
     }
 

@@ -15,7 +15,7 @@ struct PenaltyEvent: GameEvent, Comparable {
     var team: Team
     var number: Int?
     var infraction: String
-    var minutes: Int
+    var duration: String
 
     init?(with content: [String], team: Team) {
         // ["Per", "#", "Infraction", "Min", "Off Ice", "Start", "End", "On Ice"]
@@ -29,13 +29,19 @@ struct PenaltyEvent: GameEvent, Comparable {
         self.time = GameTime(period: period, time: content[5])
 
         self.number = Int(content[1])
-        self.minutes = Int(content[3]) ?? 0
+
+        let durationString = content[3]
+        if durationString == "GM" {
+            self.duration = "Game Misconduct"
+        } else {
+            self.duration = "\(durationString) minutes"
+        }
         self.infraction = content[2]
     }
 
     var description: String {
         let playerName = team.player(number: number)?.nameString ?? Player.unknownName
-        return "\(playerName), \(minutes) minutes for \(infraction)"
+        return "\(playerName), \(duration) for \(infraction)"
     }
 
     var eventDescription: String {
@@ -52,7 +58,6 @@ extension PenaltyEvent {
         guard let number = number, let player = team.player(number: number) else {
             return Player.unknownName
         }
-
         return "\(player.nameString) (\(number))"
     }
 }

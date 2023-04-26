@@ -44,7 +44,7 @@ enum PlayerType: Int, Comparable, CustomStringConvertible {
     }
 }
 
-struct Player: Identifiable, Comparable, CustomStringConvertible {
+struct Player: Identifiable, Comparable, Hashable, CustomStringConvertible {
     static let unknownName = "Unknown"
 
     var id: String { "\(number)-\(fullName)" }
@@ -61,8 +61,10 @@ struct Player: Identifiable, Comparable, CustomStringConvertible {
 
         self.number = Int(content[0]) ?? 0
 
+        // There can be weird roster rows with missing names, ensure 2nd index
+        // is actually a player type, otherwise it's still the player name.
         var nameIndex = 1
-        if content.count == 3 {
+        if content.count == 3 && content[1].count < 3 {
             self.type = PlayerType(symbol: content[1])
             nameIndex = 2
         }

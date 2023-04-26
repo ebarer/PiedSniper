@@ -96,16 +96,16 @@ struct TeamResult: Identifiable, Equatable {
 struct TeamRecord: Equatable {
     var wins: Int = 0
     var losses: Int = 0
-    var overtime: Int = 0
+    var ties: Int = 0
 
     var rank: Int = 0
 
     var gamesPlayed: Int {
-        wins + losses + overtime
+        wins + losses + ties
     }
 
     var points: Int {
-        return (2 * wins) + overtime
+        return (2 * wins) + ties
     }
 
     mutating func update(for game: Game) {
@@ -117,21 +117,17 @@ struct TeamRecord: Equatable {
         switch game.result {
         case .win(_):
             wins += 1
-        case .loss(overtime: let wentToOT):
-            if wentToOT {
-                overtime += 1
-            } else {
-                losses += 1
-            }
+        case .loss(overtime: let overtime):
+            overtime ? (ties += 1) : (losses += 1)
         case .tie:
-            break
+            ties += 1
         case .upcoming:
             break
         }
     }
 
     var summary: String {
-        "\(wins)-\(losses)-\(overtime)"
+        "\(wins)-\(losses)-\(ties)"
     }
 
     var description: String {
@@ -145,7 +141,7 @@ extension Team {
     static func piedSniper(result: TeamResult? = nil) -> Team {
         return Team(
             name: Team.piedSniperName,
-            record: TeamRecord(wins: 4, losses: 6, overtime: 2, rank: 4),
+            record: TeamRecord(wins: 4, losses: 6, ties: 2, rank: 4),
             result: result
         )
     }
@@ -153,7 +149,7 @@ extension Team {
     static func doubleSecretProbation(result: TeamResult? = nil) -> Team {
         return Team(
             name: "Double Secret Probation",
-            record: TeamRecord(wins: 8, losses: 3, overtime: 1, rank: 1),
+            record: TeamRecord(wins: 8, losses: 3, ties: 1, rank: 1),
             result: result
         )
     }

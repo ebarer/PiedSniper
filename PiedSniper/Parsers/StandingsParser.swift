@@ -78,13 +78,13 @@ extension StandingsParser {
                   sanitizedData[1] != "Team" // Ignore header
             else { continue }
 
-            let overtime = Int(sanitizedData[5])! + Int(sanitizedData[6])!
+            let ties = Int(sanitizedData[5])! + Int(sanitizedData[6])!
             let team = Team(
                 name: sanitizedData[1],
                 record: TeamRecord(
                     wins: Int(sanitizedData[3])!,
                     losses: Int(sanitizedData[4])!,
-                    overtime: overtime,
+                    ties: ties,
                     rank: rank
                 )
             )

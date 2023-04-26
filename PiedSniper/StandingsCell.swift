@@ -17,10 +17,11 @@ struct StandingsCell: View {
             GridRow {
                 Text("\(record.rank)")
                     .font(.headline)
-                    .foregroundColor(.teal)
+                    .foregroundColor(team.isPiedSniper ? .teal : .secondary)
 
                 Text(team.name)
                     .font(.headline)
+                    .foregroundColor(team.isPiedSniper ? .teal : .primary)
 
                 Group {
                     Text("\(record.gamesPlayed)")
@@ -28,14 +29,15 @@ struct StandingsCell: View {
 
                     if sizeCategory <= ContentSizeCategory.extraExtraLarge {
                         Text("\(record.losses)")
-                        Text("\(record.overtime)")
+                        Text("\(record.ties)")
                     }
                 }
                 .font(.subheadline)
                 .foregroundColor(.secondary)
 
                 Text("\(record.points)")
-                    .font(.subheadline)
+                    .font(.subheadline.bold())
+                    .foregroundColor(team.isPiedSniper ? .teal : .primary)
             }
             .padding(.trailing)
         }

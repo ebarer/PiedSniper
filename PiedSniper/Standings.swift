@@ -25,7 +25,7 @@ struct Standings: View {
         if sizeCategory <= ContentSizeCategory.extraExtraLarge {
             headers.append(contentsOf: [
                 HeaderCell(title: "L"),
-                HeaderCell(title: "OT")
+                HeaderCell(title: "T")
             ])
         }
 

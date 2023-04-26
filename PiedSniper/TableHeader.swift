@@ -15,6 +15,8 @@ struct HeaderCell {
 struct TableHeader: View {
     var headers: [HeaderCell]
     var wantsTrailingPadding: Bool = true
+    var borderHeight: CGFloat = 2
+    var borderColor: Color = .secondary
 
     var body: some View {
         GridRow {
@@ -28,6 +30,8 @@ struct TableHeader: View {
         .padding(.trailing, wantsTrailingPadding ? nil : 0)
 
         Divider()
+            .frame(height: borderHeight)
+            .overlay(borderColor)
     }
 }
 

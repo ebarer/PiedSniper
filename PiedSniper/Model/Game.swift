@@ -14,11 +14,24 @@ struct Game: Identifiable, CustomStringConvertible {
         case playoffs = "Playoffs"
     }
 
-    enum Result: Equatable {
+    enum Result: Equatable, CustomStringConvertible {
         case upcoming
         case win(overtime: Bool = false)
         case tie
         case loss(overtime: Bool = false)
+
+        var description: String {
+            switch self {
+            case .win(let overtime):
+                return "\(overtime ? "W/SO" : "Win")"
+            case .loss(let overtime):
+                return "\(overtime ? "L/SO" : "Loss")"
+            case .tie:
+                return "Tie"
+            case .upcoming:
+                return "Upcoming"
+            }
+        }
     }
 
     let id: Int

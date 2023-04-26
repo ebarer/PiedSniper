@@ -19,7 +19,7 @@ struct GameSummary: View {
         .multilineTextAlignment(.center)
         .foregroundColor(.secondary)
         .foregroundColor(.secondary)
-        .padding()
+        .padding(.top)
     }
 }
 

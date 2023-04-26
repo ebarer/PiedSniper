@@ -23,6 +23,8 @@ struct PenaltySummary: View {
                     .font(.subheadline.smallCaps().bold())
                     .foregroundColor(.secondary)
                 Divider()
+                    .frame(height: 2)
+                    .overlay(.secondary)
             }
         }
         .padding(insets)

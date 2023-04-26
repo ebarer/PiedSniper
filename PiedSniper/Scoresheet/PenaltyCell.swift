@@ -28,7 +28,7 @@ struct PenaltyCell: View {
                 Text(penalty.delinquentString)
                     .font(.headline)
 
-                Text("\(penalty.infraction)")
+                Text("\(penalty.infraction), \(penalty.duration)")
                     .font(.subheadline)
                     .foregroundColor(.secondary)
             }

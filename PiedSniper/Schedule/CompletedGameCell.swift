@@ -17,10 +17,15 @@ struct CompletedGameCell: View {
         NavigationLink(destination: destination) {
             if sizeCategory < ContentSizeCategory.accessibilityExtraLarge {
                 HStack(spacing: 15) {
-                    Text(game.date.verticalDayString)
-                        .font(.headline)
-                        .foregroundColor(dateTextColor)
-                        .multilineTextAlignment(.center)
+                    VStack(spacing: 5) {
+                        Text(game.date.completedDayString)
+                            .font(.headline)
+                            .foregroundColor(dateTextColor)
+
+                        Text(game.result.description)
+                            .font(.headline)
+                            .foregroundColor(dateTextColor)
+                    }
                     
                     VStack(alignment: .leading, spacing: 5) {
                         HStack {

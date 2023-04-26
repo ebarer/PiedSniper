@@ -20,19 +20,24 @@ struct GoalsTable: View {
                     GridRow {
                         Text(team.name)
                             .fontWeight(.semibold)
+                            .foregroundColor(foregroundColor(for: team))
 
                         Text("\(result.goals.first)")
+                            .foregroundColor(.secondary)
                         Text("\(result.goals.second)")
+                            .foregroundColor(.secondary)
                         Text("\(result.goals.third)")
+                            .foregroundColor(.secondary)
 
                         if game.wentToOT, let shootout = result.goals.shootoutDescription(winner: team == game.winner) {
                             Text(shootout)
+                                .foregroundColor(.secondary)
                         }
 
                         Text("\(result.goals.final)")
                             .fontWeight(.semibold)
+                            .foregroundColor(foregroundColor(for: team))
                     }
-                    .foregroundColor(foregroundColor(for: team))
                     .monospacedDigit()
                     .padding(.vertical, 5)
                     .padding(.trailing)
