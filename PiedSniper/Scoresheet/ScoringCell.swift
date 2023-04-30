@@ -7,9 +7,12 @@
 
 import SwiftUI
 
+class ScoringStatMaxWidthPreferenceKey: MaxWidthPreferenceKey {}
+
 struct ScoringCell: View {
     @State var goal: ScoringEvent
     @State var game: Game
+    @Binding var maxStatWidth: CGFloat
 
     var body: some View {
         HStack(alignment: .center, spacing: 15) {
@@ -18,13 +21,11 @@ struct ScoringCell: View {
                     Text(goal.time.string) +
                     Text(goal.goalType != .normal ? " • \(goal.goalType.rawValue)" : "")
                 }
-                .frame(maxWidth: .infinity)
-                .padding(EdgeInsets(top: 4, leading: 10, bottom: 4, trailing: 10))
+                .padding(EdgeInsets(top: 4, leading: 0, bottom: 4, trailing: 0))
                 .font(.caption)
                 .foregroundColor(.secondary)
 
                 Text(goal.gameScoreString(with: game))
-                    .frame(maxWidth: .infinity)
                     .foregroundColor(.primary).colorInvert()
                     .padding(EdgeInsets(top: 2, leading: 5, bottom: 2, trailing: 5))
                     .background {
@@ -32,7 +33,8 @@ struct ScoringCell: View {
                             .fill(pillColor)
                     }
             }
-            .fixedSize(horizontal: true, vertical: false)
+            .background(MaxWidthGeometry(key: ScoringStatMaxWidthPreferenceKey.self))
+            .frame(width: maxStatWidth)
 
             VStack(alignment: .leading) {
                 Text(goal.scorerString)
@@ -62,13 +64,21 @@ struct ScoringCell_Previews: PreviewProvider {
         VStack(alignment: .leading) {
             Section {
                 if let goal = ScoringEvent(with: firstGoalContent, team: Team.piedSniper(), gameScore: (1,0)) {
-                    ScoringCell(goal: goal, game: Game.previewCompletedWin)
+                    ScoringCell(
+                        goal: goal,
+                        game: Game.previewCompletedWin,
+                        maxStatWidth: .constant(150)
+                    )
                     Divider()
                 }
 
 
                 if let goal = ScoringEvent(with: secondGoalContent, team: Team.piedSniper(), gameScore: (1,1)) {
-                    ScoringCell(goal: goal, game: Game.previewCompletedWin)
+                    ScoringCell(
+                        goal: goal,
+                        game: Game.previewCompletedWin,
+                        maxStatWidth: .constant(150)
+                    )
                     Divider()
                 }
             } header: {

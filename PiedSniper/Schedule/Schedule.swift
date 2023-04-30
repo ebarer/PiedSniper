@@ -17,6 +17,8 @@ struct Schedule: View {
     @State var completedGames = [Game]()
     @State var teamRecord = TeamRecord()
 
+    @State var maxDateWidth: CGFloat = .zero
+
     var body: some View {
         NavigationStack {
             Group {
@@ -52,7 +54,7 @@ struct Schedule: View {
                         if !completedGames.isEmpty {
                             Section {
                                 ForEach(completedGames, id: \.id) { game in
-                                    CompletedGameCell(game: game, destination: Scoresheet(game: game))
+                                    CompletedGameCell(game: game, destination: Scoresheet(game: game), maxDateWidth: $maxDateWidth)
                                 }
                             } header: {
                                 Text("Record (\(teamRecord.summary))")
@@ -73,6 +75,9 @@ struct Schedule: View {
         .tint(.primary)
         .refreshable { await reload(force: true) }
         .task { await reload() }
+        .onPreferenceChange(CompletedGameDateMaxWidthPreferenceKey.self) {
+            maxDateWidth = $0
+        }
     }
 }
 

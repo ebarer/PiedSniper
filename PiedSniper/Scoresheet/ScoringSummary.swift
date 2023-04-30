@@ -9,12 +9,13 @@ import SwiftUI
 
 struct ScoringSummary: View {
     @State var game: Game
+    @State var maxStatWidth: CGFloat = .zero
 
     var body: some View {
         VStack(alignment: .leading) {
             Section {
                 ForEach(scoring, id: \.id) { goal in
-                    ScoringCell(goal: goal, game: game)
+                    ScoringCell(goal: goal, game: game, maxStatWidth: $maxStatWidth)
                         .padding(.trailing)
                     Divider()
                 }
@@ -28,6 +29,9 @@ struct ScoringSummary: View {
             }
         }
         .padding(insets)
+        .onPreferenceChange(ScoringStatMaxWidthPreferenceKey.self) {
+            maxStatWidth = $0
+        }
     }
 }
 

@@ -7,9 +7,12 @@
 
 import SwiftUI
 
+class PenaltyTimeMaxWidthPreferenceKey: MaxWidthPreferenceKey {}
+
 struct PenaltyCell: View {
     @State var penalty: PenaltyEvent
     @State var game: Game
+    @Binding var maxStatWidth: CGFloat
 
     var body: some View {
         HStack(alignment: .center, spacing: 15) {
@@ -23,6 +26,8 @@ struct PenaltyCell: View {
                             .fill(pillColor)
                     }
             }
+            .background(MaxWidthGeometry(key: PenaltyTimeMaxWidthPreferenceKey.self))
+            .frame(width: maxStatWidth)
 
             VStack(alignment: .leading) {
                 Text(penalty.delinquentString)
@@ -48,9 +53,20 @@ struct PenaltyCell_Previews: PreviewProvider {
         if let penalty = PenaltyEvent(with: penaltyContent, team: Team.piedSniper()) {
             VStack(alignment: .leading) {
                 Section {
-                    PenaltyCell(penalty: penalty, game: Game.previewCompletedWin)
+                    PenaltyCell(
+                        penalty: penalty,
+                        game: Game.previewCompletedWin,
+                        maxStatWidth: .constant(100)
+                    )
+
                     Divider()
-                    PenaltyCell(penalty: penalty, game: Game.previewCompletedWin)
+
+                    PenaltyCell(
+                        penalty: penalty,
+                        game: Game.previewCompletedWin,
+                        maxStatWidth: .constant(100)
+                    )
+
                     Divider()
                 } header: {
                     Text("Penalties")

@@ -45,6 +45,7 @@
 		CED4841429F7B42E00F637E8 /* ShootoutCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CED4841329F7B42E00F637E8 /* ShootoutCell.swift */; };
 		CED4841629F7C5A000F637E8 /* PenaltyCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CED4841529F7C5A000F637E8 /* PenaltyCell.swift */; };
 		CED4841829F7E35800F637E8 /* GameSummary.swift in Sources */ = {isa = PBXBuildFile; fileRef = CED4841729F7E35800F637E8 /* GameSummary.swift */; };
+		CED4841A29FE5B0300F637E8 /* MaxWidthPreferenceKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = CED4841929FE5B0300F637E8 /* MaxWidthPreferenceKey.swift */; };
 		CEE2853E29DFFFEC0082F7DC /* Scoresheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEE2853D29DFFFEC0082F7DC /* Scoresheet.swift */; };
 		CEE755E529D106CB0043D782 /* PiedSniperApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEE755E429D106CB0043D782 /* PiedSniperApp.swift */; };
 		CEE755E929D106CC0043D782 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CEE755E829D106CC0043D782 /* Assets.xcassets */; };
@@ -94,6 +95,7 @@
 		CED4841329F7B42E00F637E8 /* ShootoutCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ShootoutCell.swift; path = Scoresheet/ShootoutCell.swift; sourceTree = "<group>"; };
 		CED4841529F7C5A000F637E8 /* PenaltyCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = PenaltyCell.swift; path = Scoresheet/PenaltyCell.swift; sourceTree = "<group>"; };
 		CED4841729F7E35800F637E8 /* GameSummary.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = GameSummary.swift; path = Scoresheet/GameSummary.swift; sourceTree = "<group>"; };
+		CED4841929FE5B0300F637E8 /* MaxWidthPreferenceKey.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = MaxWidthPreferenceKey.swift; path = Extensions/MaxWidthPreferenceKey.swift; sourceTree = "<group>"; };
 		CEE2853D29DFFFEC0082F7DC /* Scoresheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Scoresheet.swift; sourceTree = "<group>"; };
 		CEE755E129D106CB0043D782 /* PiedSniper.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PiedSniper.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		CEE755E429D106CB0043D782 /* PiedSniperApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PiedSniperApp.swift; sourceTree = "<group>"; };
@@ -125,6 +127,7 @@
 				CEC6AC1829F51CF30089E122 /* Color+Extension.swift */,
 				CE0F47E229E2B946000B4BD3 /* SourceHelpers.swift */,
 				CEC6AC1429F5078A0089E122 /* Clamp.swift */,
+				CED4841929FE5B0300F637E8 /* MaxWidthPreferenceKey.swift */,
 				CEC6AC1D29F59FB30089E122 /* NSCache+Subscript.swift */,
 			);
 			name = Extensions;
@@ -391,6 +394,7 @@
 				CEC6AC3129F5F0970089E122 /* ShootoutEvent.swift in Sources */,
 				CEC6ABF329F4AD060089E122 /* GameTime.swift in Sources */,
 				CEC6AC2D29F5CC9C0089E122 /* TableHeader.swift in Sources */,
+				CED4841A29FE5B0300F637E8 /* MaxWidthPreferenceKey.swift in Sources */,
 				CE0F47E629EB9DFF000B4BD3 /* ScoresheetParser.swift in Sources */,
 				CE3C271029D6BC58003C70CB /* Status.swift in Sources */,
 			);

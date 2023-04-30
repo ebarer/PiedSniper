@@ -7,11 +7,15 @@
 
 import SwiftUI
 
+class CompletedGameDateMaxWidthPreferenceKey: MaxWidthPreferenceKey {}
+
 struct CompletedGameCell: View {
     @Environment(\.sizeCategory) var sizeCategory
 
     var game: Game
     var destination: Scoresheet
+
+    @Binding var maxDateWidth: CGFloat
 
     var body: some View {
         NavigationLink(destination: destination) {
@@ -26,6 +30,8 @@ struct CompletedGameCell: View {
                             .font(.headline)
                             .foregroundColor(dateTextColor)
                     }
+                    .background(MaxWidthGeometry(key: CompletedGameDateMaxWidthPreferenceKey.self))
+                    .frame(width: maxDateWidth)
                     
                     VStack(alignment: .leading, spacing: 5) {
                         HStack {
@@ -114,11 +120,15 @@ struct CompletedGameCell_Previews: PreviewProvider {
             Section {
                 CompletedGameCell(
                     game: Game.previewCompletedWin,
-                    destination: Scoresheet(game: Game.previewCompletedWin))
+                    destination: Scoresheet(game: Game.previewCompletedWin),
+                    maxDateWidth: .constant(100)
+                )
 
                 CompletedGameCell(
                     game: Game.previewCompletedLoss,
-                    destination: Scoresheet(game: Game.previewCompletedLoss))
+                    destination: Scoresheet(game: Game.previewCompletedLoss),
+                    maxDateWidth: .constant(100)
+                )
             } header: {
                 Text("Record")
             }

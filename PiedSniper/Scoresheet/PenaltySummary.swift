@@ -9,12 +9,13 @@ import SwiftUI
 
 struct PenaltySummary: View {
     @State var game: Game
+    @State var maxStatWidth: CGFloat = .zero
 
     var body: some View {
         VStack(alignment: .leading) {
             Section {
                 ForEach(penalties, id: \.id) { penalty in
-                    PenaltyCell(penalty: penalty, game: game)
+                    PenaltyCell(penalty: penalty, game: game, maxStatWidth: $maxStatWidth)
                         .padding(.trailing)
                     Divider()
                 }
@@ -28,6 +29,9 @@ struct PenaltySummary: View {
             }
         }
         .padding(insets)
+        .onPreferenceChange(PenaltyTimeMaxWidthPreferenceKey.self) {
+            maxStatWidth = $0
+        }
     }
 }
 

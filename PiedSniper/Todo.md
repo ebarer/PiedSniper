@@ -1,11 +1,5 @@
 # Todo
 
-[x] Finish scoresheet
-[ ] Figure out how to have equal horizontal width across list cells
-    - Align results on completed game cells
-    - Align times on scoring cells
-    - Align times on penalty cells
-    - Align numbers on roster cells
 [ ] Cache network requests (https://developer.apple.com/tutorials/app-dev-training/caching-network-data)
 [ ] Create a widget (https://developer.apple.com/documentation/widgetkit/creating-a-widget-extension)
 [ ] Scrape playoff table

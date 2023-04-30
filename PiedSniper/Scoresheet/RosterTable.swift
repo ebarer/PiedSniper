@@ -7,8 +7,11 @@
 
 import SwiftUI
 
+class RosterNumberMaxWidthPreferenceKey: MaxWidthPreferenceKey {}
+
 struct RosterTable: View {
     @State var game: Game
+    @State var maxNumberWidth: CGFloat = .zero
 
     var body: some View {
         Grid {
@@ -20,8 +23,12 @@ struct RosterTable: View {
             ForEach(rosters, id:\.0) { index, players in
                 GridRow {
                     if let p1 = players.0 {
-                        HStack(alignment: .top, spacing: 4) {
-                            Text("\(p1.number)").foregroundColor(.secondary).bold()
+                        HStack(alignment: .top, spacing: 6) {
+                            Text("\(p1.number)")
+                                .bold().foregroundColor(highlightColor(team: game.away))
+                                .gridColumnAlignment(.trailing)
+                                .background(MaxWidthGeometry(key: RosterNumberMaxWidthPreferenceKey.self))
+                                .frame(width: maxNumberWidth)
                             Text("\(p1.fullName) \(p1.type.description)")
                         }
                     } else {
@@ -29,8 +36,12 @@ struct RosterTable: View {
                     }
 
                     if let p2 = players.1 {
-                        HStack(alignment: .top, spacing: 4) {
-                            Text("\(p2.number)").foregroundColor(.secondary).bold()
+                        HStack(alignment: .top, spacing: 6) {
+                            Text("\(p2.number)")
+                                .bold().foregroundColor(highlightColor(team: game.home))
+                                .gridColumnAlignment(.trailing)
+                                .background(MaxWidthGeometry(key: RosterNumberMaxWidthPreferenceKey.self))
+                                .frame(width: maxNumberWidth)
                             Text("\(p2.fullName) \(p2.type.description)")
                         }
                     } else {
@@ -44,6 +55,9 @@ struct RosterTable: View {
             }
         }
         .padding(insets)
+        .onPreferenceChange(RosterNumberMaxWidthPreferenceKey.self) {
+            maxNumberWidth = $0
+        }
     }
 }
 
@@ -77,6 +91,12 @@ extension RosterTable {
 
     var insets: EdgeInsets {
         EdgeInsets(top: 20, leading: 20, bottom: 0, trailing: 0)
+    }
+}
+
+extension RosterTable {
+    func highlightColor(team: Team) -> Color {
+        team.isPiedSniper ? .teal : .darkTeal
     }
 }
 
