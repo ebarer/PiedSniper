@@ -87,7 +87,7 @@ extension CompletedGameCell {
     var dateTextColor: Color {
         switch game.result {
         case .win(overtime: _):
-            return .teal
+            return .primaryAccent
         default:
             return .secondary
         }

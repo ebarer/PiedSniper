@@ -24,7 +24,7 @@ struct Schedule: View {
             Group {
                 if !status.completed {
                     ProgressView()
-                        .tint(.teal)
+                        .tint(.primaryAccent)
                 } else if status.gamesLoaded == 0 {
                     Button {
                         Task { await reload(force: true) }
@@ -33,7 +33,7 @@ struct Schedule: View {
                             .font(.title2)
                         Image(systemName: "arrow.clockwise")
                     }
-                    .foregroundColor(.teal)
+                    .foregroundColor(.primaryAccent)
                 } else {
                     List {
                         if let gameToday = gameToday {

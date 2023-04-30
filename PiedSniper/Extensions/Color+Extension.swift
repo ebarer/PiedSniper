@@ -8,7 +8,11 @@
 import SwiftUI
 
 extension Color {
-    static var darkTeal: Color {
+    static var primaryAccent: Color {
+        .teal
+    }
+
+    static var secondaryAccent: Color {
         Color(red: 67/255.0, green: 105/255.0, blue: 118/255.0)
     }
 }

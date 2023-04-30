@@ -52,7 +52,7 @@ struct ScoringCell: View {
 
 extension ScoringCell {
     var pillColor: Color {
-        goal.team.isPiedSniper ? .teal : .darkTeal
+        goal.team.isPiedSniper ? .primaryAccent : .secondaryAccent
     }
 }
 

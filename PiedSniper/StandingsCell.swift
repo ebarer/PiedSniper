@@ -17,11 +17,11 @@ struct StandingsCell: View {
             GridRow {
                 Text("\(record.rank)")
                     .font(.headline)
-                    .foregroundColor(team.isPiedSniper ? .teal : .secondary)
+                    .foregroundColor(team.isPiedSniper ? .primaryAccent : .secondary)
 
                 Text(team.name)
                     .font(.headline)
-                    .foregroundColor(team.isPiedSniper ? .teal : .primary)
+                    .foregroundColor(team.isPiedSniper ? .primaryAccent : .primary)
 
                 Group {
                     Text("\(record.gamesPlayed)")
@@ -37,7 +37,7 @@ struct StandingsCell: View {
 
                 Text("\(record.points)")
                     .font(.subheadline.bold())
-                    .foregroundColor(team.isPiedSniper ? .teal : .primary)
+                    .foregroundColor(team.isPiedSniper ? .primaryAccent : .primary)
             }
             .padding(.trailing)
         }

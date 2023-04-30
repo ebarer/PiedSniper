@@ -43,7 +43,7 @@ struct PenaltyCell: View {
 
 extension PenaltyCell {
     var pillColor: Color {
-        penalty.team.isPiedSniper ? .teal : .darkTeal
+        penalty.team.isPiedSniper ? .primaryAccent : .secondaryAccent
     }
 }
 

@@ -44,8 +44,8 @@ struct Scoreboard: View {
                 DividedBackground(
                     startColor: awayBackgroundColor,
                     endColor: homeBackgroundColor,
-                    slantPercent: 0.2,
-                    offset: 20
+                    slantPercent: 0.15,
+                    offset: 10
                 )
                 .edgesIgnoringSafeArea([.top, .horizontal])
             }
@@ -61,11 +61,11 @@ extension Scoreboard {
     }
 
     var awayBackgroundColor: Color {
-        game.away.isPiedSniper ? .teal : .darkTeal
+        game.away.isPiedSniper ? .primaryAccent : .secondaryAccent
     }
 
     var homeBackgroundColor: Color {
-        game.home.isPiedSniper ? .teal : .darkTeal
+        game.home.isPiedSniper ? .primaryAccent : .secondaryAccent
     }
 }
 

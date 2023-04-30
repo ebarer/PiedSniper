@@ -37,12 +37,12 @@ extension TodayGameCell {
 
         if let range = string.range(of: game.date.timeString) {
             string[range].font = .title2.bold()
-            string[range].foregroundColor = .teal
+            string[range].foregroundColor = .primaryAccent
         }
 
         if let range = string.range(of: rinkString) {
             string[range].font = .title2.bold()
-            string[range].foregroundColor = .teal
+            string[range].foregroundColor = .primaryAccent
         }
 
         return string

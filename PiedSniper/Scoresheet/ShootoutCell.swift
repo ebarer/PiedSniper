@@ -61,7 +61,7 @@ struct ShootoutResultBadge: View {
     }
 
     var teamColor: Color {
-        shot.team.isPiedSniper ? .teal : .darkTeal
+        shot.team.isPiedSniper ? .primaryAccent : .secondaryAccent
     }
 
     var fillColor: Color {

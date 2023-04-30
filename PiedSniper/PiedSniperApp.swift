@@ -29,7 +29,7 @@ struct PiedSniperApp: App {
                     .tabItem { Label("Standings", systemImage: "list.number") }
                     .tag(1)
             }
-            .tint(.teal)
+            .tint(.primaryAccent)
         }
     }
 }

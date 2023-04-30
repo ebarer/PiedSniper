@@ -96,7 +96,7 @@ extension RosterTable {
 
 extension RosterTable {
     func highlightColor(team: Team) -> Color {
-        team.isPiedSniper ? .teal : .darkTeal
+        team.isPiedSniper ? .primaryAccent : .secondaryAccent
     }
 }
 

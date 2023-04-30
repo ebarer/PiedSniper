@@ -26,7 +26,7 @@ struct UpcomingGameCell: View {
                     Text(game.rink)
                         .font(.headline)
                         .multilineTextAlignment(.trailing)
-                        .foregroundColor(.teal)
+                        .foregroundColor(.primaryAccent)
                 }
 
                 Spacer()
@@ -58,7 +58,7 @@ struct UpcomingGameCell: View {
                     
                     Text(game.rink)
                         .font(.headline)
-                        .foregroundColor(.teal)
+                        .foregroundColor(.primaryAccent)
                 }
                 .allowsTightening(true)
                 .truncationMode(.middle)

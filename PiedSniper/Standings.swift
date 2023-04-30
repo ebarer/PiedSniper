@@ -38,7 +38,7 @@ struct Standings: View {
             Group {
                 if teams.isEmpty {
                     ProgressView()
-                        .tint(.teal)
+                        .tint(.primaryAccent)
                 } else {
                     ScrollView {
                         Grid(horizontalSpacing: 0, verticalSpacing: 15) {

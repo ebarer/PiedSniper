@@ -34,7 +34,7 @@ struct Scoresheet: View {
                 } else {
                     ProgressView()
                         .padding(.top, 50)
-                        .tint(.teal)
+                        .tint(.primaryAccent)
                 }
             }
             .safeAreaInset(edge: .top, spacing: 0) {
