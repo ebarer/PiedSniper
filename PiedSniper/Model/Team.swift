@@ -109,8 +109,10 @@ struct TeamRecord: Equatable {
     }
 
     mutating func update(for game: Game) {
-        // Don't include preseason games in record and standings
-        guard game.category != .preseason else {
+        // Don't include preseason and playoff games in record and standings
+        guard game.category != .preseason,
+              game.category != .playoffs
+        else {
             return
         }
 
