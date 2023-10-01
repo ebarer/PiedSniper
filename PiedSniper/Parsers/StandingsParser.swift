@@ -10,10 +10,12 @@ import Foundation
 struct StandingsParser {
     static let shared = StandingsParser()
     static let cache: NSCache<NSString, CacheEntryObject<String>> = NSCache()
+    static let currentDivision = "Adult Division 4B"
+    static let lowerDivision = "Adult Division 5A"
 
-    /// Load the standings for Adult Division 4A.
+    /// Load the standings for the specified division
     /// - Parameter preview: Indicate if preview data should be used instead of loading live results.
-    /// - Returns: Returns the Adult Division 4A standings.
+    /// - Returns: Returns the division standings.
     func loadStandings(preview: Bool = false) async -> [Team] {
         let scrapedData = await scrapeStandings(preview: preview)
         guard let data = sanitize(standingsData: scrapedData) else { return [] }
@@ -41,10 +43,15 @@ extension StandingsParser {
     /// - Parameter standingsData: Standings data to process.
     /// - Returns: Returns a separated set of strings from the specific URL if successful.
     private func sanitize(standingsData: String?) -> [String]? {
-        guard let decodedData = standingsData,
-              let trimRangeStart = decodedData.range(of: "Adult Division 4A"),
-              let trimRangeEnd = decodedData.range(of: "Adult Division 4B")
-        else {
+        guard let decodedData = standingsData else {
+            return nil
+        }
+
+        guard let trimRangeStart = decodedData.range(of: StandingsParser.currentDivision) else {
+            return nil
+        }
+
+        guard let trimRangeEnd = decodedData.range(of: StandingsParser.lowerDivision) else {
             return nil
         }
 
