@@ -40,11 +40,9 @@ struct ScoringCell: View {
                 Text(goal.scorerString)
                     .font(.headline)
 
-                if let assistsString = goal.assistsString {
-                    Text(assistsString)
-                        .font(.subheadline)
-                        .foregroundColor(.secondary)
-                }
+                Text(goal.assistsString ?? "Unassisted")
+                    .font(.subheadline)
+                    .foregroundColor(.secondary)
             }
         }
     }
@@ -71,7 +69,6 @@ struct ScoringCell_Previews: PreviewProvider {
                     )
                     Divider()
                 }
-
 
                 if let goal = ScoringEvent(with: secondGoalContent, team: Team.piedSniper(), gameScore: (1,1)) {
                     ScoringCell(

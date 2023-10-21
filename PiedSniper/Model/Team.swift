@@ -108,6 +108,12 @@ struct TeamRecord: Equatable {
         return (2 * wins) + ties
     }
 
+    mutating func reset() {
+        wins = 0
+        losses = 0
+        ties = 0
+    }
+
     mutating func update(for game: Game) {
         // Don't include preseason and playoff games in record and standings
         guard game.category != .preseason,
