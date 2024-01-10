@@ -54,7 +54,12 @@ struct Schedule: View {
                         if !completedGames.isEmpty {
                             Section {
                                 ForEach(completedGames, id: \.id) { game in
-                                    CompletedGameCell(game: game, destination: Scoresheet(game: game), maxDateWidth: $maxDateWidth)
+                                    CompletedGameCell(
+                                        game: game,
+                                        destination: Scoresheet(game: game),
+// TODO:                                        isActive: game.result != .forfeit,
+                                        maxDateWidth: $maxDateWidth
+                                    )
                                 }
                             } header: {
                                 Text("Record (\(teamRecord.summary))")
@@ -75,7 +80,7 @@ struct Schedule: View {
         .tint(.primary)
         .refreshable { await reload(force: true) }
         .task { await reload() }
-        .onPreferenceChange(CompletedGameDateMaxWidthPreferenceKey.self) {
+        .onPreferenceChange(CompletedGameDateMaxWidthPreferenceKey.self) { 
             maxDateWidth = $0
         }
     }

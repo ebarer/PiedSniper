@@ -111,15 +111,24 @@ extension ScheduleParser {
 
             let gameID = Int(sanitizedGameData[1].replacingOccurrences(of: "*", with: "")) ?? -1
 
+            let dayString = sanitizedGameData[2]
             let year = Calendar.current.component(.year, from: Date())
-            let dateString = "\(sanitizedGameData[2]) \(year) \(sanitizedGameData[3])"
+            let timeString = sanitizedGameData[3]
+            let dateString = "\(dayString) \(year) \(timeString)"
 
             let dateFormatter = DateFormatter()
             dateFormatter.dateFormat = "E MMM d yyyy h:m a"
             dateFormatter.timeZone = .current
-            guard let date = dateFormatter.date(from: dateString) else { continue }
+            guard var gameDate = dateFormatter.date(from: dateString) else { continue }
 
-            let completed = date.compare(Date()) == .orderedAscending && sanitizedGameData.count > 11
+            // This is super hacky, need a way to adjust the year to account for seasons.
+            if let monthOffset = Calendar.current.dateComponents([.month], from: Date(), to: gameDate).month,
+               monthOffset > 5 {
+                gameDate = Calendar.current.date(byAdding: .year, value: -1, to: gameDate) ?? gameDate
+            }
+
+
+            let completed = gameDate.compare(Date()) == .orderedAscending && sanitizedGameData.count > 11
 
             var rink = sanitizedGameData[4]
             if let upperBound = rink.range(of: "San Jose ")?.upperBound {
@@ -150,23 +159,33 @@ extension ScheduleParser {
             if completed {
                 var awayScoreString = sanitizedGameData[8]
                 // Overtime losses have "S" appended to the end, look for it and remove it
-                if awayScoreString.last == "S" {
-                    wentToOT = true
-                    awayScoreString = String(awayScoreString.dropLast(2))
+                if awayScoreString == "F" {
+                    result = .forfeit
+                } else {
+                    if awayScoreString.last == "S" {
+                        wentToOT = true
+                        awayScoreString = String(awayScoreString.dropLast(2))
+                    }
+                    awayScore = Int(awayScoreString) ?? -1
                 }
-                awayScore = Int(awayScoreString) ?? -1
 
                 var homeScoreString = sanitizedGameData[10]
-                if homeScoreString.last == "S" {
-                    wentToOT = true
-                    homeScoreString = String(homeScoreString.dropLast(2))
+                if homeScoreString == "F" {
+                    result = .forfeit
+                } else {
+                    if homeScoreString.last == "S" {
+                        wentToOT = true
+                        homeScoreString = String(homeScoreString.dropLast(2))
+                    }
+                    homeScore = Int(homeScoreString) ?? -1
                 }
-                homeScore = Int(homeScoreString) ?? -1
 
                 awayTeam.result = TeamResult(id: gameID, goals: TeamResult.Goals(final: awayScore))
                 homeTeam.result = TeamResult(id: gameID, goals: TeamResult.Goals(final: homeScore))
 
-                if awayScore == homeScore {
+                if result == .forfeit {
+                    // NO-OP
+                } else if awayScore == homeScore {
                     result = .tie
                 } else if homeTeam.isPiedSniper {
                     result = homeScore > awayScore ? .win(overtime: wentToOT) : .loss(overtime: wentToOT)
@@ -177,7 +196,7 @@ extension ScheduleParser {
 
             let game = Game(
                 id: gameID,
-                date: date,
+                date: gameDate,
                 category: category,
                 rink: rink,
                 away: awayTeam,

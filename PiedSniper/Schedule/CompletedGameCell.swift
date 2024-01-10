@@ -13,12 +13,12 @@ struct CompletedGameCell: View {
     @Environment(\.sizeCategory) var sizeCategory
 
     var game: Game
-    var destination: Scoresheet
-
+    var destination: Scoresheet?
+// TODO:    @Binding var isActive: Bool
     @Binding var maxDateWidth: CGFloat
 
     var body: some View {
-        NavigationLink(destination: destination) {
+        NavigationLink(destination: destination) { // TODO: , isActive: $isActive) {
             if sizeCategory < ContentSizeCategory.accessibilityExtraLarge {
                 HStack(spacing: 15) {
                     VStack(spacing: 5) {
@@ -121,12 +121,14 @@ struct CompletedGameCell_Previews: PreviewProvider {
                 CompletedGameCell(
                     game: Game.previewCompletedWin,
                     destination: Scoresheet(game: Game.previewCompletedWin),
+// TODO:                    isActive: .constant(true),
                     maxDateWidth: .constant(100)
                 )
 
                 CompletedGameCell(
                     game: Game.previewCompletedLoss,
                     destination: Scoresheet(game: Game.previewCompletedLoss),
+// TODO:                    isActive: .constant(true),
                     maxDateWidth: .constant(100)
                 )
             } header: {

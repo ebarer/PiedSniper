@@ -129,6 +129,8 @@ struct TeamRecord: Equatable {
             overtime ? (ties += 1) : (losses += 1)
         case .tie:
             ties += 1
+        case .forfeit:
+            losses += 1
         case .upcoming:
             break
         }

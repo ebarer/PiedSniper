@@ -19,6 +19,7 @@ struct Game: Identifiable, CustomStringConvertible {
         case win(overtime: Bool = false)
         case tie
         case loss(overtime: Bool = false)
+        case forfeit
 
         var description: String {
             switch self {
@@ -30,6 +31,8 @@ struct Game: Identifiable, CustomStringConvertible {
                 return "Tie"
             case .upcoming:
                 return "Upcoming"
+            case .forfeit:
+                return "Forfeit"
             }
         }
     }
