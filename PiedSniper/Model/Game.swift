@@ -105,6 +105,22 @@ extension Game {
     }
 }
 
+// MARK: - Parser Helpers
+
+extension Game {
+    func team(for id: String) -> Team? {
+        if let player = home.players.values.first(where: { $0.id == id }) {
+            return home
+        }
+
+        if let player = away.players.values.first(where: { $0.id == id }) {
+            return away
+        }
+
+        return nil
+    }
+}
+
 // MARK: - Game Helpers for Previews
 
 extension Game {

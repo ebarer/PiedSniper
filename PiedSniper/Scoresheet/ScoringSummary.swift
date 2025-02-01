@@ -14,10 +14,16 @@ struct ScoringSummary: View {
     var body: some View {
         VStack(alignment: .leading) {
             Section {
-                ForEach(scoring, id: \.id) { goal in
-                    ScoringCell(goal: goal, game: game, maxStatWidth: $maxStatWidth)
-                        .padding(.trailing)
-                    Divider()
+                if scoring.isEmpty {
+                    Text("None")
+                        .font(.footnote)
+                        .fontWeight(.semibold)
+                } else {
+                    ForEach(scoring, id: \.id) { goal in
+                        ScoringCell(goal: goal, game: game, maxStatWidth: $maxStatWidth)
+                            .padding(.trailing)
+                        Divider()
+                    }
                 }
             } header: {
                 Text("Scoring")
@@ -39,14 +45,7 @@ extension ScoringSummary {
     var scoring: [ScoringEvent] {
         guard let gameEvents = game.events else { return [] }
         guard let scoringEvents = gameEvents[.scoring] as? [ScoringEvent] else { return [] }
-
-        var currentScore: (away: Int, home: Int) = (0, 0)
-        return scoringEvents.sorted().map { goal in
-            var goal = goal
-            (goal.team == game.away) ? (currentScore.away += 1) : (currentScore.home += 1)
-            goal.gameScore = currentScore
-            return goal
-        }
+        return scoringEvents.sorted()
     }
 
     var insets: EdgeInsets {

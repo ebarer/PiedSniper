@@ -14,10 +14,16 @@ struct PenaltySummary: View {
     var body: some View {
         VStack(alignment: .leading) {
             Section {
-                ForEach(penalties, id: \.id) { penalty in
-                    PenaltyCell(penalty: penalty, game: game, maxStatWidth: $maxStatWidth)
-                        .padding(.trailing)
-                    Divider()
+                if penalties.isEmpty {
+                    Text("None")
+                        .font(.footnote)
+                        .fontWeight(.semibold)
+                } else {
+                    ForEach(penalties, id: \.id) { penalty in
+                        PenaltyCell(penalty: penalty, game: game, maxStatWidth: $maxStatWidth)
+                            .padding(.trailing)
+                        Divider()
+                    }
                 }
             } header: {
                 Text("Penalties")

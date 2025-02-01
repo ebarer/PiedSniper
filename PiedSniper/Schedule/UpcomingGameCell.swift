@@ -36,9 +36,12 @@ struct UpcomingGameCell: View {
                         .font(.title2)
                         .multilineTextAlignment(.leading)
 
-                    Text("at \(game.home.name)")
-                        .font(.title2)
-                        .multilineTextAlignment(.leading)
+                    Group {
+                        Text("at ").foregroundStyle(.tertiary) +
+                        Text("\(game.home.name)")
+                    }
+                    .font(.title2)
+                    .multilineTextAlignment(.leading)
                 }
             }
             .padding(10)

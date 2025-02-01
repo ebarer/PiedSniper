@@ -80,14 +80,8 @@ struct ShootoutResultBadge: View {
 struct ShootoutCell_Previews: PreviewProvider {
     static var previews: some View {
         let shots: [ShootoutEvent] = [
-            ShootoutEvent(
-                with: ["4", "2", "Shot"],
-                team: Team.doubleSecretProbation()
-            )!,
-            ShootoutEvent(
-                with: ["1", "41", "Goal"],
-                team: Team.piedSniper()
-            )!
+            ShootoutEvent(team: Team.doubleSecretProbation(), round: 4, number: 2, scored: false),
+            ShootoutEvent(team: Team.piedSniper(), round: 1, number: 41, scored: true),
         ]
 
         Grid {

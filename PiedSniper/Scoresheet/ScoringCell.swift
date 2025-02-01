@@ -56,28 +56,27 @@ extension ScoringCell {
 
 struct ScoringCell_Previews: PreviewProvider {
     static var previews: some View {
-        let firstGoalContent = ["2", "14:47", "PP", "76", "6", "57"]
-        let secondGoalContent = ["3", "00:17", "", "6", "", ""]
-
         VStack(alignment: .leading) {
             Section {
-                if let goal = ScoringEvent(with: firstGoalContent, team: Team.piedSniper(), gameScore: (1,0)) {
-                    ScoringCell(
-                        goal: goal,
-                        game: Game.previewCompletedWin,
-                        maxStatWidth: .constant(150)
-                    )
-                    Divider()
-                }
+                let firstGoal = ScoringEvent(goalType: .powerplay, time: GameTime(period: 2, time: "14:47"), team: Team.piedSniper(), number: 76, assists: [6, 57])
 
-                if let goal = ScoringEvent(with: secondGoalContent, team: Team.piedSniper(), gameScore: (1,1)) {
-                    ScoringCell(
-                        goal: goal,
-                        game: Game.previewCompletedWin,
-                        maxStatWidth: .constant(150)
-                    )
-                    Divider()
-                }
+                let secondGoal = ScoringEvent(goalType: .normal, time: GameTime(period: 3, time: "00:17"), team: Team.piedSniper(), number: 6, assists: nil)
+
+                ScoringCell(
+                    goal: firstGoal,
+                    game: Game.previewCompletedWin,
+                    maxStatWidth: .constant(150)
+                )
+
+                Divider()
+
+                ScoringCell(
+                    goal: secondGoal,
+                    game: Game.previewCompletedWin,
+                    maxStatWidth: .constant(150)
+                )
+
+                Divider()
             } header: {
                 Text("Scoring Summary")
                     .font(.subheadline.smallCaps().bold())

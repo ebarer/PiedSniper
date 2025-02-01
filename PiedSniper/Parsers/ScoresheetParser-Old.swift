@@ -9,7 +9,7 @@ import Foundation
 import os
 import RegexBuilder
 
-struct ScoresheetParser {
+struct ScoresheetParserOld {
     static let shared = ScoresheetParser()
     static let cache: NSCache<NSString, CacheEntryObject<String>> = NSCache()
 
@@ -61,7 +61,7 @@ struct ScoresheetParser {
     }
 }
 
-extension ScoresheetParser {
+extension ScoresheetParserOld {
     /// Process the passed scoresheet data by stripping out the HTML table tags and trimming whitespace.
     /// - Parameter scoresheetData: Scoresheet data to process.
     /// - Returns: Returns a separated set of strings from the scoresheet if successful.
@@ -161,7 +161,7 @@ extension ScoresheetParser {
 
 // MARK: - Scoresheet Data
 
-extension ScoresheetParser {
+extension ScoresheetParserOld {
     /// Extract the players from the roster table.
     /// - Parameter content: A row in the roster table, broken into an array of strings.
     /// - Returns: The players extracted from the roster table row.
@@ -273,17 +273,17 @@ extension ScoresheetParser {
     ///   - team: <#team description#>
     /// - Returns: <#description#>
     func event(type: GameEventType, in content: [String], team: Team, game: inout Game) -> (any GameEvent)? {
-        switch type {
-        case .scoring:
-            return ScoringEvent(with: content, team: team)
-        case .shootout:
-            return ShootoutEvent(with: content, team: team)
-        case .penalties:
-            return PenaltyEvent(with: content, team: team)
-        default:
-            break
-        }
-
+//        switch type {
+//        case .scoring:
+//            return ScoringEvent(with: content, team: team)
+//        case .shootout:
+//            return ShootoutEvent(with: content, team: team)
+//        case .penalties:
+//            return PenaltyEvent(with: content, team: team)
+//        default:
+//            break
+//        }
+//
         return nil
     }
 }
@@ -359,3 +359,4 @@ enum ScoresheetSection: Int, Comparable {
         lhs.rawValue < rhs.rawValue
     }
 }
+

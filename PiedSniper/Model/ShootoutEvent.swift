@@ -16,17 +16,6 @@ struct ShootoutEvent: Identifiable, GameEvent, Comparable {
     var number: Int?
     var scored: Bool
 
-    init?(with content: [String], team: Team) {
-        // ["#", "Player", "Result"]
-        // ["1", "41", "Goal"]
-        // ["4", "2", "Shot"]
-        guard content.count == 3 else { return nil }
-        self.team = team
-        number = Int(content[1])
-        round = Int(content[0]) ?? 0
-        scored = (content[2] == "Goal")
-    }
-
     var description: String {
         let playerName = team.player(number: number)?.nameString ?? Player.unknownName
         return "\(playerName), \(scored ? "Scored" : "Missed")"

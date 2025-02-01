@@ -44,6 +44,7 @@ extension Team {
         return players[number]
     }
 
+    /// Sorted list of team players by type and then jersey number
     var roster: [Player] {
         var roster = Array(players.values) as [Player]
         roster.sort(by: <)

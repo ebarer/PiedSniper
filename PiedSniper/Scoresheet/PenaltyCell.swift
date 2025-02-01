@@ -33,7 +33,7 @@ struct PenaltyCell: View {
                 Text(penalty.delinquentString)
                     .font(.headline)
 
-                Text("\(penalty.infraction), \(penalty.duration)")
+                Text("\(penalty.infraction), \(penalty.duration)m")
                     .font(.subheadline)
                     .foregroundColor(.secondary)
             }
@@ -49,31 +49,36 @@ extension PenaltyCell {
 
 struct PenaltyCell_Previews: PreviewProvider {
     static var previews: some View {
-        let penaltyContent = ["2", "18", "Body Check", "2", "7:57", "7:57", "5:57", "5:01 W"]
-        if let penalty = PenaltyEvent(with: penaltyContent, team: Team.piedSniper()) {
-            VStack(alignment: .leading) {
-                Section {
-                    PenaltyCell(
-                        penalty: penalty,
-                        game: Game.previewCompletedWin,
-                        maxStatWidth: .constant(100)
-                    )
+        let penalty = PenaltyEvent(
+            time: GameTime(period: 2, time: "7:57"),
+            team: Team.piedSniper(),
+            number: 18,
+            infraction: "Body Check",
+            duration: 2
+        )
 
-                    Divider()
+        VStack(alignment: .leading) {
+            Section {
+                PenaltyCell(
+                    penalty: penalty,
+                    game: Game.previewCompletedWin,
+                    maxStatWidth: .constant(100)
+                )
 
-                    PenaltyCell(
-                        penalty: penalty,
-                        game: Game.previewCompletedWin,
-                        maxStatWidth: .constant(100)
-                    )
+                Divider()
 
-                    Divider()
-                } header: {
-                    Text("Penalties")
-                        .font(.subheadline.smallCaps().bold())
-                        .foregroundColor(.secondary)
-                    Divider()
-                }
+                PenaltyCell(
+                    penalty: penalty,
+                    game: Game.previewCompletedWin,
+                    maxStatWidth: .constant(100)
+                )
+
+                Divider()
+            } header: {
+                Text("Penalties")
+                    .font(.subheadline.smallCaps().bold())
+                    .foregroundColor(.secondary)
+                Divider()
             }
         }
     }

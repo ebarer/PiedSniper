@@ -94,7 +94,9 @@ extension Schedule {
 
         teamRecord.reset()
 
-        let result = await ScheduleParser.shared.loadSchedule(status: &status, record: &teamRecord)
+        let result = await ScheduleParser.shared.loadSchedule(status: status, record: teamRecord)
+        status = result.status
+        teamRecord = result.record
         gameToday = result.today
         upcomingGames = result.upcoming
         completedGames = result.completed

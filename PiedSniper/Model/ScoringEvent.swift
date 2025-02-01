@@ -7,6 +7,16 @@
 
 import Foundation
 
+struct GameScore {
+    var home: Int
+    var away: Int
+
+    static func += (lhs: inout GameScore, rhs: GameScore) {
+        lhs.home += rhs.home
+        lhs.away += rhs.away
+    }
+}
+
 struct ScoringEvent: GameEvent, Comparable {
     enum GoalType: String {
         case normal = ""
@@ -24,31 +34,39 @@ struct ScoringEvent: GameEvent, Comparable {
     var number: Int?
     var assists: [Int]?
 
-    var gameScore: (away: Int, home: Int)
+    var gameScore = GameScore(home: 0, away: 0)
 
-    init?(with content: [String], team: Team, gameScore: (away: Int, home: Int) = (0, 0)) {
-        // ["Per", "Time", "", "Goal", "Ass.", "Ass."]
-        // ["1", "7:11", "", "24", "", ""]
-        guard content.count >= 4 else { return nil }
-
+    init(goalType: GoalType, time: GameTime, team: Team, number: Int?, assists: [Int]?) {
+        self.goalType = goalType
+        self.time = time
         self.team = team
+        self.number = number
+        self.assists = assists
+    }
 
-        let period = Int(content[0]) ?? 0
-        time = GameTime(period: period, time: content[1])
-
-        goalType = GoalType(rawValue: content[2]) ?? .normal
-
-        number = Int(content[3])
-
-        assists = [Int]()
-        if let assist = Int(content[4]) {
-            assists?.append(assist)
-        }
-        if let assist = Int(content[5]) {
-            assists?.append(assist)
+    init?(from event: LiveEvent, team: Team, gameScore: GameScore) {
+        guard let goalTypeName = event.goalTypeName,
+              let eventTime = event.time,
+              let number = event.goalPlayerJersey
+        else {
+            return nil
         }
 
+        self.goalType = ScoringEvent.GoalType(rawValue: goalTypeName) ?? .normal
+        self.time = GameTime(period: event.period, time: eventTime)
+        self.team = team
+        self.number = Int(number)
         self.gameScore = gameScore
+
+        // Determine if there are assists
+        var assists = [Int]()
+        if let firstAssistNumber = event.ass1PlayerJersey {
+            assists.append(Int(firstAssistNumber)!)
+        }
+        if let secondAssistNumber = event.ass2PlayerJersey {
+            assists.append(Int(secondAssistNumber)!)
+        }
+        self.assists = assists
     }
 
     var description: String {
@@ -82,8 +100,12 @@ struct ScoringEvent: GameEvent, Comparable {
 
 extension ScoringEvent {
     var scorerString: String {
-        guard let number = number, let player = team.player(number: number) else {
+        guard let number = number else {
             return Player.unknownName
+        }
+
+        guard let player = team.player(number: number) else {
+            return "\(Player.unknownName) (\(number))"
         }
 
         return "\(player.nameString) (\(number))"
@@ -91,12 +113,18 @@ extension ScoringEvent {
 
     var assistsString: String? {
         guard let assists = assists else { return nil }
+
+        let fallbackString = assists.map { "\(Player.unknownName) (\($0))" } .joined(separator: ", ")
+
         let assistsString: [String] = assists.compactMap { number in
             guard let player = team.player(number: number) else { return nil }
             return "\(player.nameString) (\(number))"
         }
 
-        guard !assistsString.isEmpty else { return nil }
+        guard !assistsString.isEmpty else {
+            return fallbackString
+        }
+
         return assistsString.joined(separator: ", ")
     }
 

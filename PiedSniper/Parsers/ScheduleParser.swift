@@ -12,17 +12,17 @@ struct ScheduleParser {
 
     /// Load the schedule for Pied Snipers.
     /// - Parameters:
-    ///   - status: Inout object for keep track of the view status.
-    ///   - record: Inout object to keep track of the team record.
+    ///   - status: Keep track of the view status.
+    ///   - record: Keep track of the team record.
     /// - Returns: Returns a tuple containing today's game, if one exists, upcoming games, and completed games.
-    func loadSchedule(status: inout ScheduleStatus, record: inout TeamRecord) async -> (today: Game?, upcoming: [Game], completed: [Game]) {
-        var result: (today: Game?, upcoming: [Game], completed: [Game]) = (nil, [], [])
+    func loadSchedule(status: ScheduleStatus, record: TeamRecord) async -> (status: ScheduleStatus, today: Game?, upcoming: [Game], completed: [Game], record: TeamRecord) {
+        var result: (status: ScheduleStatus, today: Game?, upcoming: [Game], completed: [Game], record: TeamRecord) = (status, nil, [], [], record)
 
         let scrapedData = await scrapeSchedule(preview: status.preview)
         guard let data = sanitize(gamesData: scrapedData) else {
-            status.gamesLoaded = 0
-            status.lastSyncDate = Date()
-            status.completed = true
+            result.status.gamesLoaded = 0
+            result.status.lastSyncDate = .now
+            result.status.completed = true
             return result
         }
 
@@ -33,7 +33,7 @@ struct ScheduleParser {
             } else if game.result == .upcoming {
                 result.upcoming.append(game)
             } else {
-                record.update(for: game)
+                result.record.update(for: game)
                 result.completed.insert(game, at: 0)
             }
         }        
@@ -47,9 +47,10 @@ struct ScheduleParser {
             result.today?.lockerRoom = lockerRoom
         }
 
-        status.gamesLoaded = games.count
-        status.lastSyncDate = Date()
-        status.completed = true
+        result.status.gamesLoaded = games.count
+        result.status.lastSyncDate = .now
+        result.status.completed = true
+
         return result
     }
 

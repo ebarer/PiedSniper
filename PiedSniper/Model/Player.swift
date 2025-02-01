@@ -47,29 +47,20 @@ enum PlayerType: Int, Comparable, CustomStringConvertible {
 struct Player: Identifiable, Comparable, Hashable, CustomStringConvertible {
     static let unknownName = "Unknown"
 
-    var id: String { "\(number)-\(fullName)" }
-
+    let id: String
     let number: Int
     let names: [String]
     var type: PlayerType = .player
 
-    init?(for content: [String]) {
-        guard content.count >= 2 else { return nil }
-//        ["1", "G", "Elliot Barer"]
-//        ["15", "C", "JEFF MOCK"]
-//        ["18", "Matthew B Lagarto"]
-
-        self.number = Int(content[0]) ?? 0
-
-        // There can be weird roster rows with missing names, ensure 2nd index
-        // is actually a player type, otherwise it's still the player name.
-        var nameIndex = 1
-        if content.count == 3 && content[1].count < 3 {
-            self.type = PlayerType(symbol: content[1])
-            nameIndex = 2
+    init?(for skater: Skater) {
+        self.id = skater.id ?? UUID().uuidString
+        self.number = skater.jersey != nil ? Int(skater.jersey!) ?? 0 : 0
+        
+        if let name = skater.name {
+            self.names = name.split(separator: " ").map { String($0) }
+        } else {
+            self.names = [Player.unknownName]
         }
-
-        self.names = content[nameIndex].split(separator: " ").map { String($0) }
     }
 
     var description: String {

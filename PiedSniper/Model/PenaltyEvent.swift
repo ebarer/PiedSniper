@@ -15,33 +15,34 @@ struct PenaltyEvent: GameEvent, Comparable {
     var team: Team
     var number: Int?
     var infraction: String
-    var duration: String
+    var duration: Int
 
-    init?(with content: [String], team: Team) {
-        // ["Per", "#", "Infraction", "Min", "Off Ice", "Start", "End", "On Ice"]
-        // [ 0 ,  1  ,       2     ,  3 ,    4  ,    5  ,   6   ,    7    ]
-        // ["2", "18", "Body Check", "2", "7:57", "7:57", "5:57", "5:01 W"]
-        guard content.count >= 5 else { return nil }
-
+    init(time: GameTime, team: Team, number: Int?, infraction: String, duration: Int) {
+        self.time = time
         self.team = team
+        self.number = number
+        self.infraction = infraction
+        self.duration = duration
+    }
 
-        let period = Int(content[0]) ?? 0
-        self.time = GameTime(period: period, time: content[5])
-
-        self.number = Int(content[1])
-
-        let durationString = content[3]
-        if durationString == "GM" {
-            self.duration = "Game Misconduct"
-        } else {
-            self.duration = "\(durationString) minutes"
+    init?(from event: LiveEvent, team: Team) {
+        guard let eventTime = event.time,
+              let number = event.penaltyPlayerJersey,
+              let duration = event.duration
+        else {
+            return nil
         }
-        self.infraction = content[2]
+
+        self.time = GameTime(period: event.period, time: eventTime)
+        self.team = team
+        self.number = Int(number)
+        self.infraction = event.penaltyName ?? "Unknown"
+        self.duration = Int(duration) ?? 0
     }
 
     var description: String {
         let playerName = team.player(number: number)?.nameString ?? Player.unknownName
-        return "\(playerName), \(duration) for \(infraction)"
+        return "\(playerName), \(duration) min for \(infraction)"
     }
 
     var eventDescription: String {
